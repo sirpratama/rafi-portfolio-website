@@ -84,8 +84,8 @@ export const ProjectsSection = () => {
                 ))}
             </div>
 
-            <div className="mt-12 flex">
-                <a className="cosmic-button w-fit flex items-center gap-2" href="https://github.com/sirpratama" target="_blank">
+            <div className="mt-10 flex">
+                <a className="cosmic-button rounded-lg px-8 py-3 font-monsterrat font-medium flex items-center gap-2" href="https://github.com/sirpratama" target="_blank">
                     Check My Github <ArrowRight size={16}/>
                 </a>
             </div>

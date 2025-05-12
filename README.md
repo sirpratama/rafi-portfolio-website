@@ -1,12 +1,72 @@
-# React + Vite
+# Rafi's Portfolio Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive portfolio website built with React, Vite, and Tailwind CSS that showcases my skills, projects, and contact information.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Responsive Design**: Mobile-friendly interface that adapts to all screen sizes
+- **Dark/Light Mode**: Toggle between dark and light themes
+- **Modern UI**: Clean, professional design with smooth animations using Framer Motion
+- **Multiple Sections**:
+  - Hero section with introduction
+  - Skills showcase with technology cards
+  - Projects gallery
+  - Contact form
+- **React Router**: Smooth navigation between pages
 
-## Expanding the ESLint configuration
+## 💻 Technologies
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **React 19**: Built with the latest version of React
+- **Vite**: Optimized build tool for fast development and production builds
+- **Tailwind CSS**: Utility-first CSS framework for rapid UI development
+- **Framer Motion**: Animation library for smooth transitions
+- **React Icons**: Icon library for tech stack visualization
+- **React Router**: For page navigation
+- **Radix UI**: Accessible UI components
+
+## 🛠️ Installation & Setup
+
+1. Clone the repository
+   ```
+   git clone https://github.com/sirpratama/rafi-portfolio-website.git
+   ```
+
+2. Navigate to the project directory
+   ```
+   cd rafi-portfolio-website
+   ```
+
+3. Install dependencies
+   ```
+   npm install
+   ```
+
+4. Start the development server
+   ```
+   npm run dev
+   ```
+
+5. Build for production
+   ```
+   npm run build
+   ```
+
+## 📱 Project Structure
+
+- `/src`: Source code
+  - `/components`: Reusable UI components
+  - `/pages`: Main page components
+  - `/assets`: Images and static assets
+  - `/hooks`: Custom React hooks
+  - `/lib`: Utility functions
+
+## 🌐 Deployment
+
+The site is built to be easily deployed on platforms like:
+- Vercel
+- Netlify
+- GitHub Pages
+
+## 📝 License
+
+MIT License

@@ -13,6 +13,8 @@ import {
   SiPrisma,
   SiPostgresql,
   SiJavascript,
+  SiPython,
+  SiExpress,
 } from "react-icons/si"
 import { motion } from "framer-motion"
 
@@ -32,9 +34,9 @@ export const SkillsSection = () => {
     const CurrentTechnologies = () => {
         const technologies = [
             {
-                icon: <SiFigma className="w-8 h-8 text-[#F24E1E]" />,
-                name: "Figma",
-                description: "Design Tool",
+                icon: <SiNextdotjs className="w-8 h-8 text-black dark:text-white" />,
+                name: "NextJS",
+                description: "React framework",
             },
             {
                 icon: <SiTypescript className="w-8 h-8 text-[#3178C6]" />,
@@ -47,9 +49,9 @@ export const SkillsSection = () => {
                 description: "JavaScript Library",
             },
             {
-                icon: <SiNextdotjs className="w-8 h-8 text-black dark:text-white" />,
-                name: "NextJS",
-                description: "React framework",
+                icon: <SiNodedotjs className="w-8 h-8 text-[#339933]" />,
+                name: "NodeJS",
+                description: "Backend",
             },
             {
                 icon: <SiTailwindcss className="w-8 h-8 text-[#06B6D4]" />,
@@ -67,19 +69,14 @@ export const SkillsSection = () => {
                 description: "Backend tool",
             },
             {
-                icon: <SiNodedotjs className="w-8 h-8 text-[#339933]" />,
-                name: "NodeJS",
-                description: "Backend",
+                icon: <SiJavascript className="w-8 h-8 text-[#F0DB4F]" />,
+                name: "JavaScript",
+                description: "TypeScript but worse",
             },
             {
-                icon: <SiMongodb className="w-8 h-8 text-[#47A248]" />,
-                name: "MongoDB",
-                description: "NoSQL database",
-            },
-            {
-                icon: <SiPrisma className="w-8 h-8 text-[#2D3748]" />,
-                name: "Prisma",
-                description: "ORM",
+                icon: <SiExpress className="w-8 h-8 text-[#2D3748]" />,
+                name: "Express",
+                description: "Backend framework",
             },
             {
                 icon: <SiPostgresql className="w-8 h-8 text-[#4169E1]" />,
@@ -87,9 +84,9 @@ export const SkillsSection = () => {
                 description: "OR database system",
             },
             {
-                icon: <SiJavascript className="w-8 h-8 text-[#F0DB4F]" />,
-                name: "JavaScript",
-                description: "TypeScript but worse",
+                icon: <SiPython className="w-8 h-8 text-[#306998]" />,
+                name: "Python",
+                description: "Not the snake",
             },
         ]
 

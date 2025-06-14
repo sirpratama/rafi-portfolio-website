@@ -21,7 +21,7 @@ import { motion } from "framer-motion"
 const TechnologyCard = ({ icon, name, description }) => {
   return (
     <motion.div 
-      className="rounded-xl p-6 flex items-center gap-4 transition-all duration-300 hover:-translate-y-2 bg-white border border-gray-200 hover:border-gray-300 hover:shadow-xl dark:bg-zinc-900/60 dark:border-zinc-800 dark:hover:shadow-[0_0_20px_rgba(139,92,246,0.3)] dark:hover:border-zinc-700 cursor-pointer group"
+      className="rounded-xl p-6 flex items-center gap-4 h-32 transition-all duration-300 hover:-translate-y-2 bg-white border border-gray-200 hover:border-gray-300 hover:shadow-xl dark:bg-zinc-900/60 dark:border-zinc-800 dark:hover:shadow-[0_0_20px_rgba(139,92,246,0.3)] dark:hover:border-zinc-700 cursor-pointer group"
       whileHover={{ 
         scale: 1.02,
         transition: { duration: 0.2 }
@@ -29,14 +29,14 @@ const TechnologyCard = ({ icon, name, description }) => {
       whileTap={{ scale: 0.98 }}
     >
       <motion.div 
-        className="w-12 h-12 flex items-center justify-center group-hover:rotate-12 transition-transform duration-300"
+        className="w-12 h-12 flex items-center justify-center flex-shrink-0 group-hover:rotate-12 transition-transform duration-300"
         whileHover={{ rotate: 360, transition: { duration: 0.6 } }}
       >
         {icon}
       </motion.div>
-      <div>
-        <h3 className="text-left text-xl font-medium text-gray-900 dark:text-white transition-colors duration-300 group-hover:text-purple-500">{name}</h3>
-        <p className="text-left text-gray-500 dark:text-zinc-400 transition-colors duration-300">{description}</p>
+      <div className="flex flex-col justify-center min-w-0 flex-1">
+        <h3 className="text-left text-lg font-medium text-gray-900 dark:text-white transition-colors duration-300 group-hover:text-purple-500 mb-1 truncate">{name}</h3>
+        <p className="text-left text-sm text-gray-500 dark:text-zinc-400 transition-colors duration-300 line-clamp-2">{description}</p>
       </div>
     </motion.div>
   )
@@ -165,7 +165,7 @@ export const SkillsSection = () => {
                     </motion.div>
 
                     <motion.div 
-                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
                         initial="hidden"
                         whileInView="visible"
                         viewport={{ once: true, amount: 0.2 }}

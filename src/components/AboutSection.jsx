@@ -182,24 +182,15 @@ export const AboutSection = () => {
                 </motion.div>
 
                 {/* Timeline Content */}
-                <AnimatePresence mode="wait">
-                    <motion.div
-                        key={activeTab}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        transition={{ duration: 0.5 }}
-                        className="relative"
-                    >
-                        {currentData.map((item, index) => (
-                            <TimelineItem
-                                key={item.id}
-                                item={item}
-                                isLast={index === currentData.length - 1}
-                            />
-                        ))}
-                    </motion.div>
-                </AnimatePresence>
+                <div className="relative">
+                    {currentData.map((item, index) => (
+                        <TimelineItem
+                            key={item.id}
+                            item={item}
+                            isLast={index === currentData.length - 1}
+                        />
+                    ))}
+                </div>
             </div>
         </section>
     );

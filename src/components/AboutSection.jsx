@@ -5,26 +5,26 @@ import { Calendar, MapPin, ExternalLink } from "lucide-react";
 const educationData = [
     {
         id: 1,
-        title: "Computer Science",
-        institution: "University of Technology",
-        period: "2020 - 2024",
-        description: "Focused on software engineering and web development with hands-on projects.",
+        institution: "Universtas Indonesia",
+        title: "S.Kom. Computer Science",
+        period: "Expected Graduation: 2028",
+        achievements: [
+            "Currently pursuing a Bachelor's degree in Computer Science at Universitas Indonesia",
+            "Teaching Assistant for the course of Data Structures and Algorithms"
+        ],
+        projects: ["Project 1", "Project 2"],
         logo: "🎓" // Placeholder - replace with actual logo URL
     },
     {
         id: 2,
-        title: "Full Stack Certificate",
-        institution: "Coding Bootcamp Institute",
-        period: "2023",
-        description: "Intensive program covering React, Node.js, and modern web technologies.",
-        logo: "💻" // Placeholder - replace with actual logo URL
-    },
-    {
-        id: 3,
-        title: "High School Diploma",
-        institution: "Jakarta International School",
-        period: "2016 - 2020",
-        description: "Specialized in Mathematics and Computer Science with programming focus.",
+        institution: "SMA Labschool Kebayoran",
+        title: "High School",
+        period: "2021 - 2024",
+        achievements: [
+            "Graduated from SMA Labschool Kebayoran with a focus on Mathematics and Computer Science",
+            "Selected as Indonesia representative for World Scout Jamboree Korea 2023"
+        ],
+        projects: [],
         logo: "🏫" // Placeholder - replace with actual logo URL
     }
 ];
@@ -32,27 +32,50 @@ const educationData = [
 const experienceData = [
     {
         id: 1,
-        title: "Full Stack Developer",
-        company: "Tech Solutions Inc.",
-        period: "2024 - Present",
-        description: "Developing web applications with React and Node.js while leading a small development team.",
-        logo: "🏢" // Placeholder - replace with actual company logo URL
+        company: "DBS Bank",
+        title: "Graduate Associate (SEED Programme)",
+        period: "Jul 2023 - Present",
+        achievements: [
+            "Developed the Java backend for a bank account servicing process with multiple channel integrations using Activiti workflow",
+            "Built a custom database migration tool using Python and MariaDB and facilitated the migration of 1000+ processes from a vendor platform"
+        ],
+        projects: [],
+        logo: "🏦" // Placeholder - replace with actual company logo URL
     },
     {
         id: 2,
-        title: "Frontend Developer Intern",
-        company: "Digital Agency Co.",
-        period: "2023 - 2024",
-        description: "Built responsive web interfaces using React and collaborated with design teams.",
-        logo: "🎨" // Placeholder - replace with actual company logo URL
+        company: "Singapore Institute of Technology",
+        title: "Software Developer (Contract)",
+        period: "Apr 2023 - Jun 2023",
+        achievements: [
+            "Built NFTVue, a NFT gallery website that allows students to connect their crypto wallets to view and verify their school event-issued NFTs",
+            "Worked on DemoConstruct, a full-stack web application (React + Python) that uses Meshroom to reconstruct 3D models from captured images"
+        ],
+        projects: ["NFTVue"],
+        logo: "🏫" // Placeholder - replace with actual company logo URL
     },
     {
         id: 3,
-        title: "Freelance Web Developer",
-        company: "Self-Employed",
-        period: "2022 - 2023",
-        description: "Created custom websites for small businesses and managed project lifecycles.",
-        logo: "💼" // Placeholder - replace with actual company logo URL
+        company: "DBS Bank",
+        title: "Software Developer (Intern)",
+        period: "May 2022 - Dec 2022",
+        achievements: [
+            "Worked on the backend for the digital exchange and asset custody application using Spring Boot and Java",
+            "Built an admin dashboard web application for a DBS Metaverse event using Spring Security and Angular"
+        ],
+        projects: [],
+        logo: "🏦" // Placeholder - replace with actual company logo URL
+    },
+    {
+        id: 4,
+        company: "Activate Interactive Pte Ltd",
+        title: "Software Developer (Intern)",
+        period: "May 2019 - Aug 2019",
+        achievements: [
+            "Developed RP Connect, the iOS and Android mobile app for Republic Polytechnic using React Native"
+        ],
+        projects: [],
+        logo: "📱" // Placeholder - replace with actual company logo URL
     }
 ];
 
@@ -87,24 +110,56 @@ const TimelineItem = ({ item, isLast }) => {
             >
                 <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
                     <div className="flex-1">
-                        <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-1">
-                            {item.title}
-                        </h3>
-                        <p className="text-purple-600 dark:text-purple-400 font-medium mb-3">
-                            {item.company || item.institution}
-                        </p>
-                    </div>
-                    <div className="text-sm text-gray-500 dark:text-zinc-400 md:text-right">
-                        <div className="flex items-center gap-1">
-                            <Calendar className="w-4 h-4" />
-                            <span>{item.period}</span>
+                        <div className="flex items-start gap-2 mb-1">
+                            <span className="text-sm text-gray-500 dark:text-zinc-400 text-left">{item.period}</span>
                         </div>
+                        <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-1 text-left">
+                            {item.company || item.institution}
+                        </h3>
+                        <p className="text-gray-600 dark:text-zinc-400 font-medium mb-4 text-left">
+                            {item.title}
+                        </p>
                     </div>
                 </div>
 
-                <p className="text-gray-600 dark:text-zinc-300 leading-relaxed">
-                    {item.description}
-                </p>
+                {/* Achievements */}
+                {item.achievements && item.achievements.length > 0 && (
+                    <ul className="space-y-2 mb-4">
+                        {item.achievements.map((achievement, index) => (
+                            <motion.li
+                                key={index}
+                                className="flex items-start gap-2 text-gray-700 dark:text-zinc-300 text-sm leading-relaxed text-left"
+                                initial={{ opacity: 0, x: -10 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                transition={{ duration: 0.3, delay: index * 0.1 }}
+                                viewport={{ once: true }}
+                            >
+                                <span className="text-purple-500 text-xs leading-6 flex-shrink-0">●</span>
+                                <span className="text-left">{achievement}</span>
+                            </motion.li>
+                        ))}
+                    </ul>
+                )}
+
+                {/* Projects */}
+                {item.projects && item.projects.length > 0 && (
+                    <div className="flex flex-wrap gap-2 justify-start">
+                        {item.projects.map((project, index) => (
+                            <motion.span
+                                key={index}
+                                className="px-3 py-1 text-xs font-medium bg-gray-100 dark:bg-zinc-800 text-gray-700 dark:text-zinc-300 rounded-full border border-gray-200 dark:border-zinc-700 hover:bg-purple-50 dark:hover:bg-purple-900/30 hover:border-purple-200 dark:hover:border-purple-700 transition-colors duration-200 cursor-pointer text-left"
+                                initial={{ opacity: 0, scale: 0.8 }}
+                                whileInView={{ opacity: 1, scale: 1 }}
+                                transition={{ duration: 0.3, delay: index * 0.1 }}
+                                viewport={{ once: true }}
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                            >
+                                🌐 {project}
+                            </motion.span>
+                        ))}
+                    </div>
+                )}
             </motion.div>
         </motion.div>
     );

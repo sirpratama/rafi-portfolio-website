@@ -196,7 +196,7 @@
 .color {
   height: 350px;
   width: 2500px;
-  background-image: radial-gradient(circle, rgba(200, 0, 255, 0.5), transparent 60%);
+  background-image: radial-gradient(circle, rgba(147, 51, 234, 0.5) 0%, rgba(59, 130, 246, 0.3) 40%, transparent 60%);
   position: absolute;
   top: -250px;
   left: 50%;

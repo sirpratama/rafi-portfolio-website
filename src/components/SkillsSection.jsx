@@ -159,8 +159,8 @@ export const SkillsSection = () => {
                             transition={{ duration: 0.6, delay: 0.4 }}
                             viewport={{ once: true }}
                         >
-                            I'm proficient in a range of modern technologies that empower me to build highly functional solutions. These
-                            are some of my main technologies.
+                        I'm proficient in a range of modern technologies that empower me to build highly functional solutions. These
+                        are some of my main technologies.
                         </motion.p>
                     </motion.div>
 

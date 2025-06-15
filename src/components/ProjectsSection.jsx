@@ -47,8 +47,8 @@ export const ProjectsSection = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.4 }}
                     viewport={{ once: true }}
-                >
-                    Here are some of the projects I've worked on.
+            >
+                Here are some of the projects I've worked on.
                 </motion.p>
             </motion.div>
 
@@ -91,7 +91,7 @@ export const ProjectsSection = () => {
                         >
                             <motion.img 
                                 src={project.image} 
-                                alt={project.title} 
+                            alt={project.title} 
                                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                 initial={{ scale: 1.1 }}
                                 animate={{ scale: 1 }}

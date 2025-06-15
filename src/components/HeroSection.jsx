@@ -1,4 +1,5 @@
 import { ArrowDown, Download } from "lucide-react";
+import { motion } from "framer-motion";
 
 export const HeroSection = () => {
     return(
@@ -23,10 +24,98 @@ export const HeroSection = () => {
                         <a href="#projects" className="cosmic-button rounded-lg px-8 py-3 font-medium w-full sm:w-auto text-center">
                             View My Projects
                         </a>
-                        <a href="/CV ATS Muhammad Rafi Nazir Pratama.pdf" download className="rounded-xl p-4 flex items-center justify-center gap-4 transition-all duration-300 hover:-translate-y-1 bg-white border border-gray-200 hover:border-gray-300 hover:shadow-xl dark:bg-zinc-900/60 dark:border-zinc-800 dark:hover:shadow-[0_0_15px_rgba(255,255,255,0.3)] dark:hover:border-zinc-700 active:scale-95 w-full sm:w-auto">
-                            <Download className="h-5 w-5" />
-                            <span>Download CV</span>
-                        </a>
+                        <motion.a 
+                            href="/CV ATS Muhammad Rafi Nazir Pratama.pdf" 
+                            download 
+                            className="group relative rounded-xl p-4 flex items-center justify-center gap-4 bg-white dark:bg-zinc-900/60 border-2 border-gray-200 dark:border-zinc-800 text-gray-700 dark:text-zinc-300 font-medium w-full sm:w-auto overflow-hidden"
+                            whileHover={{ 
+                                scale: 1.02,
+                                y: -2,
+                                borderColor: "#a855f7",
+                                boxShadow: "0 10px 30px rgba(168, 85, 247, 0.2)"
+                            }}
+                            whileTap={{ scale: 0.98 }}
+                            transition={{ duration: 0.2 }}
+                        >
+                            {/* Animated background gradient */}
+                            <motion.div
+                                className="absolute inset-0 bg-gradient-to-r from-purple-500/10 via-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100"
+                                initial={{ x: "-100%" }}
+                                whileHover={{ 
+                                    x: "100%",
+                                    opacity: 1,
+                                    transition: { 
+                                        x: { duration: 0.6, ease: "easeInOut" },
+                                        opacity: { duration: 0.2 }
+                                    }
+                                }}
+                            />
+                            
+                            {/* Pulsing glow effect */}
+                            <motion.div
+                                className="absolute inset-0 rounded-xl bg-gradient-to-r from-purple-400/20 to-blue-400/20 opacity-0"
+                                animate={{
+                                    opacity: [0, 0.3, 0],
+                                    scale: [1, 1.02, 1]
+                                }}
+                                transition={{
+                                    duration: 3,
+                                    repeat: Infinity,
+                                    ease: "easeInOut"
+                                }}
+                            />
+                            
+                            {/* Content */}
+                            <div className="relative z-10 flex items-center gap-4">
+                                <motion.div
+                                    className="relative"
+                                    whileHover={{ 
+                                        rotate: [0, -10, 10, 0],
+                                        scale: 1.1
+                                    }}
+                                    transition={{ 
+                                        duration: 0.5,
+                                        ease: "easeInOut"
+                                    }}
+                                >
+                                    <Download className="h-5 w-5 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors duration-300" />
+                                    
+                                    {/* Download arrow animation */}
+                                    <motion.div
+                                        className="absolute -top-1 -right-1 w-2 h-2 bg-purple-500 rounded-full opacity-0"
+                                        animate={{
+                                            opacity: [0, 1, 0],
+                                            y: [0, 8, 16],
+                                            scale: [0.5, 1, 0.5]
+                                        }}
+                                        transition={{
+                                            duration: 2,
+                                            repeat: Infinity,
+                                            ease: "easeInOut",
+                                            delay: 1
+                                        }}
+                                    />
+                                </motion.div>
+                                
+                                <motion.span 
+                                    className="group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors duration-300"
+                                    whileHover={{ x: 2 }}
+                                    transition={{ duration: 0.2 }}
+                                >
+                                    Download CV
+                                </motion.span>
+                            </div>
+                            
+                            {/* Shimmer effect */}
+                            <motion.div
+                                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 -skew-x-12"
+                                initial={{ x: "-100%" }}
+                                whileHover={{
+                                    x: "200%",
+                                    transition: { duration: 0.8, ease: "easeInOut" }
+                                }}
+                            />
+                        </motion.a>
                     </div>
                 </div>
             </div>

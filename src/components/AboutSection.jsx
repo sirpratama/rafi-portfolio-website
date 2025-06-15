@@ -10,10 +10,9 @@ const educationData = [
         period: "Expected Graduation: 2028",
         achievements: [
             "Currently pursuing a Bachelor's degree in Computer Science at Universitas Indonesia",
-            "Teaching Assistant for the course of Data Structures and Algorithms"
         ],
-        projects: ["Project 1", "Project 2"],
-        logo: "🎓" // Placeholder - replace with actual logo URL
+        projects: [],
+        logo: "/logos/UI logo 2.png" // Placeholder - replace with actual logo URL
     },
     {
         id: 2,
@@ -22,60 +21,61 @@ const educationData = [
         period: "2021 - 2024",
         achievements: [
             "Graduated from SMA Labschool Kebayoran with a focus on Mathematics and Computer Science",
-            "Selected as Indonesia representative for World Scout Jamboree Korea 2023"
+            "Selected as **Indonesia representative** for World Scout Jamboree Korea 2023"
         ],
         projects: [],
-        logo: "🏫" // Placeholder - replace with actual logo URL
+        logo: "/logos/Logo_Labschool.png" // Placeholder - replace with actual logo URL
     }
 ];
 
 const experienceData = [
     {
         id: 1,
-        company: "DBS Bank",
-        title: "Graduate Associate (SEED Programme)",
-        period: "Jul 2023 - Present",
+        company: "Google Developer Groups on Campus",
+        title: "Member",
+        period: "Dec 2024 - Present",
         achievements: [
-            "Developed the Java backend for a bank account servicing process with multiple channel integrations using Activiti workflow",
-            "Built a custom database migration tool using Python and MariaDB and facilitated the migration of 1000+ processes from a vendor platform"
+            "Led a team of 3 to victory in the GDG On Campus UI Hackathon 2025, securing **Best Tech Implementation** and **Best UI/UX Design** awards",
+            "Architected and developed **REST APIs** for the Career Path Compass Hub project using React, Node.js, Express, and PostgreSQL",
+            "Leverage **AI** to personalize career paths for students by using **Google Gemini API**"
         ],
-        projects: [],
-        logo: "🏦" // Placeholder - replace with actual company logo URL
+        projects: ["Career Path Compass Hub"],
+        logo: "/logos/gdgc_ui_logo.png"
     },
     {
         id: 2,
-        company: "Singapore Institute of Technology",
-        title: "Software Developer (Contract)",
-        period: "Apr 2023 - Jun 2023",
+        company: "OpenHouse Fasilkom",
+        title: "Business Development Team",
+        period: "Aug 2024 - Sept 2024",
         achievements: [
-            "Built NFTVue, a NFT gallery website that allows students to connect their crypto wallets to view and verify their school event-issued NFTs",
-            "Worked on DemoConstruct, a full-stack web application (React + Python) that uses Meshroom to reconstruct 3D models from captured images"
+            "Contributed to fundraising initiatives for OpenHouse Fasilkom through strategic merchandise sales and vendor relations",
+            "Successfully identified and liaised with merchandise vendors, ensuring cost-effectiveness"
         ],
-        projects: ["NFTVue"],
-        logo: "🏫" // Placeholder - replace with actual company logo URL
+        projects: [],
+        logo: "/logos/openhousefasilkom.png" // Placeholder - replace with actual company logo URL
     },
     {
         id: 3,
-        company: "DBS Bank",
-        title: "Software Developer (Intern)",
-        period: "May 2022 - Dec 2022",
+        company: "Scouts",
+        title: "Core Team",
+        period: "Aug 2021 - Sept 2023",
         achievements: [
-            "Worked on the backend for the digital exchange and asset custody application using Spring Boot and Java",
-            "Built an admin dashboard web application for a DBS Metaverse event using Spring Security and Angular"
+            "Selected as a **representative** for the Indonesia Contingent at the **World Scout Jamboree Korea 2023**, demonstrating leadership and adaptability",
+            "Actively participated in initiatives that enhanced the school scouts program visibility and engagement"
         ],
         projects: [],
-        logo: "🏦" // Placeholder - replace with actual company logo URL
+        logo: "/logos/worldscouting_logo.png" // Placeholder - replace with actual company logo URL
     },
     {
         id: 4,
-        company: "Activate Interactive Pte Ltd",
-        title: "Software Developer (Intern)",
-        period: "May 2019 - Aug 2019",
+        company: "SkyeAvenue",
+        title: "Funding Committee",
+        period: "Jan 2023 - Aug 2023",
         achievements: [
-            "Developed RP Connect, the iOS and Android mobile app for Republic Polytechnic using React Native"
+            "Collaborated within a 30-member committee on daily sales of merchandise, food, and beverages, contributing to SkyAvenue achieving a net profit of **IDR 130 million** within six months"
         ],
         projects: [],
-        logo: "📱" // Placeholder - replace with actual company logo URL
+        logo: "/logos/skyavenue_logo.png" // Placeholder - replace with actual company logo URL
     }
 ];
 
@@ -91,11 +91,19 @@ const TimelineItem = ({ item, isLast }) => {
             {/* Timeline bullet and line */}
             <div className="relative flex flex-col items-center">
                 <motion.div
-                    className="w-16 h-16 bg-white dark:bg-zinc-900 rounded-full border-4 border-purple-500 shadow-lg z-10 flex items-center justify-center text-2xl"
+                    className="w-16 h-16 bg-white dark:bg-zinc-900 rounded-full border-4 border-purple-500 shadow-lg z-10 flex items-center justify-center text-2xl overflow-hidden"
                     whileHover={{ scale: 1.1 }}
                     transition={{ duration: 0.2 }}
                 >
-                    {item.logo}
+                    {item.logo.startsWith('/') ? (
+                        <img 
+                            src={item.logo} 
+                            alt={`${item.company || item.institution} logo`}
+                            className="w-full h-full object-cover rounded-full"
+                        />
+                    ) : (
+                        item.logo
+                    )}
                 </motion.div>
                 {!isLast && (
                     <div className="w-0.5 h-full bg-gradient-to-b from-purple-300 to-blue-300 mt-2 absolute top-16" />
@@ -125,19 +133,38 @@ const TimelineItem = ({ item, isLast }) => {
                 {/* Achievements */}
                 {item.achievements && item.achievements.length > 0 && (
                     <ul className="space-y-2 mb-4">
-                        {item.achievements.map((achievement, index) => (
-                            <motion.li
-                                key={index}
-                                className="flex items-start gap-2 text-gray-700 dark:text-zinc-300 text-sm leading-relaxed text-left"
-                                initial={{ opacity: 0, x: -10 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                transition={{ duration: 0.3, delay: index * 0.1 }}
-                                viewport={{ once: true }}
-                            >
-                                <span className="text-purple-500 text-xs leading-6 flex-shrink-0">●</span>
-                                <span className="text-left">{achievement}</span>
-                            </motion.li>
-                        ))}
+                        {item.achievements.map((achievement, index) => {
+                            // Function to render text with bold formatting
+                            const renderFormattedText = (text) => {
+                                const parts = text.split(/(\*\*.*?\*\*)/g);
+                                return parts.map((part, partIndex) => {
+                                    if (part.startsWith('**') && part.endsWith('**')) {
+                                        return (
+                                            <strong key={partIndex} className="font-bold text-purple-600 dark:text-purple-400">
+                                                {part.slice(2, -2)}
+                                            </strong>
+                                        );
+                                    }
+                                    return part;
+                                });
+                            };
+
+                            return (
+                                <motion.li
+                                    key={index}
+                                    className="flex items-start gap-2 text-gray-700 dark:text-zinc-300 text-sm leading-relaxed text-left"
+                                    initial={{ opacity: 0, x: -10 }}
+                                    whileInView={{ opacity: 1, x: 0 }}
+                                    transition={{ duration: 0.3, delay: index * 0.1 }}
+                                    viewport={{ once: true }}
+                                >
+                                    <span className="text-purple-500 text-xs leading-6 flex-shrink-0">●</span>
+                                    <span className="text-left">
+                                        {renderFormattedText(achievement)}
+                                    </span>
+                                </motion.li>
+                            );
+                        })}
                     </ul>
                 )}
 

@@ -11,7 +11,7 @@ const projects = [
         tags: ["React","Typescript", "Node.js", "Express", "PostgreSQL", "Gemini API"],
         demoUrl: "https://career-path-compass-hub.vercel.app/",
         githubUrl:"https://github.com/sirpratama/career-path-compass-hub"
-    }
+    },
 ]
 
 export const ProjectsSection = () => {

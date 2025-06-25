@@ -11,7 +11,7 @@ export const ContactSection = () => {
 
     // Initialize EmailJS
     useEffect(() => {
-        emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY);
+        emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY || '-QfUH-3m-mUseF3iX');
     }, []);
 
     const handleSubmit = async (e) => {
@@ -32,7 +32,7 @@ export const ContactSection = () => {
                 import.meta.env.VITE_EMAILJS_SERVICE_ID,
                 import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
                 e.target,
-                import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+                import.meta.env.VITE_EMAILJS_PUBLIC_KEY || '-QfUH-3m-mUseF3iX'
             );
 
             console.log('Email sent successfully:', result.text);

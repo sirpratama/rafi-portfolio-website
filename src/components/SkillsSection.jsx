@@ -16,7 +16,7 @@ import {
   SiPython,
   SiExpress,
 } from "react-icons/si"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"; // eslint-disable-line
 
 const TechnologyCard = ({ icon, name, description }) => {
   return (

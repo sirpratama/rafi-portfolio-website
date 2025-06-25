@@ -1,5 +1,5 @@
 import { ExternalLink, Github } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion"; // eslint-disable-line
 import { ArrowRight } from "lucide-react";
 
 const projects = [
@@ -12,6 +12,15 @@ const projects = [
         demoUrl: "https://career-path-compass-hub.vercel.app/",
         githubUrl:"https://github.com/sirpratama/career-path-compass-hub"
     },
+    {
+        id: 2,
+        title: "Golden Age of Video Games Analysis",
+        description: "A data analysis project that explores the golden age of video games, analyzing sales data and trends.",
+        image: "/projects/project 2.png",
+        tags: ["Python", "Pandas", "Matplotlib", "Seaborn", "NumPy", "SQL"],
+        demoUrl: "https://github.com/sirpratama/golden_era_of_videogames",
+        githubUrl:"https://github.com/sirpratama/golden_era_of_videogames"
+    }
 ]
 
 export const ProjectsSection = () => {

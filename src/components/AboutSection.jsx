@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion"; // eslint-disable-line
 import { Calendar, MapPin, ExternalLink } from "lucide-react";
 
 const educationData = [

@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { X, Menu } from "lucide-react";
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion"; // eslint-disable-line
 
 
 const navItems = [

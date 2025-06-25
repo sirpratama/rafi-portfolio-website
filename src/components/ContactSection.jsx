@@ -1,25 +1,63 @@
 import { Linkedin, Mail, MapPin, Phone, Instagram, Twitter, Github, Send } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion"; // eslint-disable-line
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import emailjs from '@emailjs/browser';
 
 export const ContactSection = () => {
     const { toast } = useToast()
     const [isSubmitting, setIsSubmitting] = useState(false)
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
+    // Initialize EmailJS
+    useEffect(() => {
+        emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY);
+    }, []);
 
+    const handleSubmit = async (e) => {
+        e.preventDefault()
         setIsSubmitting(true)
 
-        setTimeout(() => {
+        try {
+            // Get form data for debugging
+            const formData = new FormData(e.target);
+            console.log('Form data:', {
+                from_name: formData.get('from_name'),
+                from_email: formData.get('from_email'),
+                message: formData.get('message')
+            });
+
+            // EmailJS configuration using environment variables
+            const result = await emailjs.sendForm(
+                import.meta.env.VITE_EMAILJS_SERVICE_ID,
+                import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+                e.target,
+                import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+            );
+
+            console.log('Email sent successfully:', result.text);
             toast({
-                title: "Message sent!",
+                title: "Message sent successfully!",
                 description: "Thank you for contacting me. I will get back to you as soon as possible."
             })
+            
+            // Reset form
+            e.target.reset();
+        } catch (error) {
+            console.error('Failed to send email:', error);
+            console.error('Error details:', {
+                status: error.status,
+                text: error.text,
+                message: error.message
+            });
+            toast({
+                title: "Failed to send message",
+                description: "Something went wrong. Please try again or contact me directly.",
+                variant: "destructive"
+            })
+        } finally {
             setIsSubmitting(false)
-        }, 1500)
+        }
     }
 
     const contactInfo = [
@@ -178,7 +216,7 @@ export const ContactSection = () => {
                             >
                                 Connect With Me
                             </motion.h4>
-                            <div className="flex space-x-4">
+                            <div className="flex space-x-4 justify-center">
                                 {socialLinks.map((social, index) => {
                                     const IconComponent = social.icon;
                                     return (
@@ -240,7 +278,7 @@ export const ContactSection = () => {
                                 <motion.input
                                     type="text"
                                     id="name"
-                                    name="name"
+                                    name="from_name"
                                     required
                                     className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
                                     placeholder="Your Name..."
@@ -260,7 +298,7 @@ export const ContactSection = () => {
                                 <motion.input
                                     type="email"
                                     id="email"
-                                    name="email"
+                                    name="from_email"
                                     required
                                     className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
                                     placeholder="Your Email..."

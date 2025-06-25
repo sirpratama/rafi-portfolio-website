@@ -1,5 +1,5 @@
 import { ArrowDown, Download } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion"; // eslint-disable-line
 
 export const HeroSection = () => {
     return(

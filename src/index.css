@@ -9,6 +9,7 @@
   --color-primary-foreground: hsl(var(--primary-foreground));
 
   --color-card: hsl(var(--card));
+  --color-muted-foreground: hsl(var(--muted-foreground));
 
   --animate-float: float 6s ease-in-out infinite;
   --animate-pulse-subtle: pulse-subtle 4s ease-in-out infinite;
@@ -90,16 +91,30 @@
 
 @layer base {
   :root {
-    --background: 0 0% 0%; /* Black */
-    --foreground: 0 0% 100%; /* White */
+    --background: 0 0% 100%; /* White for light theme */
+    --foreground: 0 0% 3.9%; /* Dark text for light theme */
 
-    --card: 0 0% 10%; /* Darker card for contrast */
+    --card: 0 0% 100%; /* White card background for light theme */
 
-    --primary: 0 0% 100%; /* White */
-    --primary-foreground: 0 0% 0%; /* Black */
+    --primary: 220 14.3% 95.9%; /* Light primary */
+    --primary-foreground: 220.9 39.3% 11%; /* Dark text on light primary */
 
-    --border: 0 0% 20%; /* Darker border */
+    --border: 220 13% 91%; /* Light border */
+    --muted-foreground: 220 8.9% 46.1%; /* Muted text for light theme */
     --font-family: 'Poppins', sans-serif;
+  }
+
+  .dark {
+    --background: 0 0% 0%; /* Black for dark theme */
+    --foreground: 0 0% 100%; /* White text for dark theme */
+
+    --card: 0 0% 10%; /* Darker card for contrast in dark theme */
+
+    --primary: 0 0% 100%; /* White primary in dark theme */
+    --primary-foreground: 0 0% 0%; /* Black text on white primary in dark theme */
+
+    --border: 0 0% 20%; /* Darker border in dark theme */
+    --muted-foreground: 0 0% 63.9%; /* Muted text for dark theme */
   }
 
   * {

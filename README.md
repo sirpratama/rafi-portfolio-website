@@ -5,7 +5,6 @@ A modern, responsive portfolio website built with React, Vite, and Tailwind CSS 
 ## 🚀 Features
 
 - **Responsive Design**: Mobile-friendly interface that adapts to all screen sizes
-- **Dark/Light Mode**: Toggle between dark and light themes
 - **Modern UI**: Clean, professional design with smooth animations using Framer Motion
 - **Multiple Sections**:
   - Hero section with introduction

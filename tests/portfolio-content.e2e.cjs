@@ -108,3 +108,30 @@ test("skills preserve inline gutters at tablet and desktop widths", async () => 
         await page.setViewportSize({ width: 1440, height: 1000 });
     }
 });
+
+test("four flagship case studies explain problem, approach, result, and source", async () => {
+    const section = page.locator("#projects");
+    const cards = section.locator(".project-showcase-card");
+    assert.equal(await cards.count(), 4);
+
+    const expected = [
+        ["AP-Analytics", "https://github.com/sirpratama/find-it-ml"],
+        ["Financial News Analyzer", "https://github.com/sirpratama/News-Stock-Identifier"],
+        ["ESGku", "https://github.com/sirpratama/esg_score"],
+        ["Golden Age of Video Games Analysis", "https://github.com/sirpratama/golden_era_of_videogames"],
+    ];
+
+    for (const [index, [title, href]] of expected.entries()) {
+        const card = cards.nth(index);
+        await assert.doesNotReject(() => card.getByRole("heading", { name: title }).waitFor());
+        for (const label of ["Problem", "Approach", "Result"]) {
+            await assert.doesNotReject(() => card.getByText(label, { exact: true }).waitFor());
+        }
+        const source = card.getByRole("link", { name: new RegExp(`Explore ${title} source`, "i") });
+        assert.equal(await source.getAttribute("href"), href);
+        assert.equal(await source.getAttribute("target"), "_blank");
+        assert.match(await source.getAttribute("rel"), /noreferrer/);
+    }
+
+    assert.equal(await cards.getByRole("heading", { name: "Career Path Compass Hub" }).count(), 0);
+});

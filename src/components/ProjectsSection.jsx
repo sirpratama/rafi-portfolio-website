@@ -1,26 +1,24 @@
-import { ArrowRight, ExternalLink, Github } from "lucide-react";
+import { projects } from "@/data/portfolioData";
+import { ArrowRight, ExternalLink } from "lucide-react";
 import { motion } from "framer-motion"; // eslint-disable-line
 
-const projects = [
-    {
-        id: 1,
-        title: "Career Path Compass Hub",
-        description: "A platform for students to explore career paths and discover opportunities that fit their goals.",
-        image: "/projects/project-placeholder.svg",
-        tags: ["React", "TypeScript", "Gemini AI"],
-        demoUrl: "https://career-path-compass-hub.vercel.app/",
-        githubUrl: "https://github.com/sirpratama/career-path-compass-hub",
-    },
-    {
-        id: 2,
-        title: "Golden Age of Video Games Analysis",
-        description: "A data analysis project exploring the golden age of video games through sales data and industry trends.",
-        image: "/projects/project-placeholder.svg",
-        tags: ["Python", "Data Analysis", "SQL"],
-        demoUrl: "https://github.com/sirpratama/golden_era_of_videogames",
-        githubUrl: "https://github.com/sirpratama/golden_era_of_videogames",
-    },
-];
+const PROJECT_FALLBACK = "/projects/project-placeholder.svg";
+
+const ProjectImage = ({ project }) => (
+    <img
+        src={project.image}
+        alt={project.imageAlt}
+        width="960"
+        height="540"
+        loading="lazy"
+        decoding="async"
+        onError={({ currentTarget }) => {
+            currentTarget.onerror = null;
+            currentTarget.src = PROJECT_FALLBACK;
+            currentTarget.alt = "";
+        }}
+    />
+);
 
 export const ProjectsSection = () => {
     return (
@@ -59,46 +57,44 @@ export const ProjectsSection = () => {
                 <div className="projects-showcase-grid">
                     {projects.map((project) => (
                         <article key={project.id} className="project-showcase-card">
-                            <div className="project-showcase-tags" aria-label="Project technologies">
+                            <div className="project-showcase-tags" aria-label={`${project.title} technologies`}>
                                 {project.tags.map((tag) => (
                                     <span key={tag}>{tag}</span>
                                 ))}
                             </div>
 
                             <div className="project-showcase-media">
-                                <img
-                                    src={project.image}
-                                    alt={`Placeholder preview for ${project.title}`}
-                                    width="960"
-                                    height="540"
-                                    loading="lazy"
-                                    decoding="async"
-                                />
+                                <ProjectImage project={project} />
                             </div>
 
                             <div className="project-showcase-body">
+                                <p className="project-showcase-recognition">{project.recognition}</p>
                                 <h3>{project.title}</h3>
-                                <p>{project.description}</p>
+                                <dl className="project-showcase-details">
+                                    <div className="project-showcase-detail">
+                                        <dt>Problem</dt>
+                                        <dd>{project.problem}</dd>
+                                    </div>
+                                    <div className="project-showcase-detail">
+                                        <dt>Approach</dt>
+                                        <dd>{project.approach}</dd>
+                                    </div>
+                                    <div className="project-showcase-detail">
+                                        <dt>Result</dt>
+                                        <dd>{project.result}</dd>
+                                    </div>
+                                </dl>
 
                                 <div className="project-showcase-actions">
-                                    <a
-                                        href={project.demoUrl}
-                                        target="_blank"
-                                        rel="noreferrer"
-                                        className="project-showcase-primary-link"
-                                    >
-                                        View project
-                                        <ExternalLink size={17} aria-hidden="true" />
-                                    </a>
                                     <a
                                         href={project.githubUrl}
                                         target="_blank"
                                         rel="noreferrer"
-                                        className="project-showcase-source-link"
-                                        aria-label={`View ${project.title} source code on GitHub`}
+                                        className="project-showcase-primary-link"
+                                        aria-label={`Explore ${project.title} source on GitHub`}
                                     >
-                                        <Github size={16} aria-hidden="true" />
-                                        Source
+                                        Explore source
+                                        <ExternalLink size={17} aria-hidden="true" />
                                     </a>
                                 </div>
                             </div>

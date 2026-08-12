@@ -718,15 +718,42 @@
   color: white;
 }
 
-.project-showcase-body > p {
-  margin: 1rem 0 0;
-  color: #64748b;
-  font-size: 0.96rem;
-  line-height: 1.7;
+.project-showcase-recognition {
+  margin: 0 0 0.7rem;
+  color: var(--cerebrium-blue-dark) !important;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.67rem;
+  font-weight: 500;
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
 }
 
-.dark .project-showcase-body > p {
-  color: #a1a1aa;
+.project-showcase-details {
+  display: grid;
+  gap: 1rem;
+  margin: 1.5rem 0 0;
+}
+
+.project-showcase-detail {
+  display: grid;
+  grid-template-columns: 5rem minmax(0, 1fr);
+  gap: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(88, 100, 144, 0.25);
+}
+
+.project-showcase-detail dt {
+  color: var(--cerebrium-blue-dark);
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.67rem;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.project-showcase-detail dd {
+  margin: 0;
+  color: var(--cerebrium-navy-soft);
+  line-height: 1.55;
 }
 
 .project-showcase-actions {
@@ -762,28 +789,6 @@
   transform: translateX(3px);
 }
 
-.project-showcase-source-link {
-  padding: 0.55rem 0.8rem;
-  border-radius: 999px;
-  color: #526188;
-  background: rgba(255, 255, 255, 0.55);
-}
-
-.project-showcase-source-link:hover {
-  color: #6d28d9;
-  background: rgba(255, 255, 255, 0.9);
-}
-
-.dark .project-showcase-source-link {
-  color: #a1a1aa;
-  background: rgba(63, 63, 70, 0.7);
-}
-
-.dark .project-showcase-source-link:hover {
-  color: #c4b5fd;
-  background: rgba(82, 82, 91, 0.9);
-}
-
 @media (max-width: 820px) {
   .projects-showcase-grid {
     grid-template-columns: 1fr;
@@ -811,6 +816,11 @@
 
   .project-showcase-actions {
     padding-top: 1.5rem;
+  }
+
+  .project-showcase-detail {
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
   }
 }
 
@@ -1558,20 +1568,11 @@ textarea {
   font-weight: 400;
 }
 
-.cerebrium-projects-panel .project-showcase-body > p {
-  color: var(--cerebrium-navy-soft);
-}
-
 .cerebrium-projects-panel .project-showcase-primary-link {
   color: var(--cerebrium-navy);
   font-family: "IBM Plex Mono", ui-monospace, monospace;
   font-size: 0.72rem;
   text-transform: uppercase;
-}
-
-.cerebrium-projects-panel .project-showcase-source-link {
-  color: var(--cerebrium-navy);
-  background: white;
 }
 
 .cerebrium-projects-panel .cosmic-button,

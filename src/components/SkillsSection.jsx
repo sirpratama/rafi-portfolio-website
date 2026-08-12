@@ -9,7 +9,7 @@ const groupIcons = {
 };
 
 export const SkillsSection = () => (
-    <section id="skills" className="cerebrium-dark-section cerebrium-skills">
+    <section id="skills" className="cerebrium-dark-section cerebrium-skills px-8 relative overflow-hidden">
         <div className="mx-auto max-w-6xl relative z-10">
             <motion.div
                 className="text-center mb-16"

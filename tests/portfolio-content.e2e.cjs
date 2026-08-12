@@ -71,3 +71,40 @@ test("skills are organized by recruiter-relevant capabilities", async () => {
     }
     assert.equal(await skills.locator(".skill-group-card").count(), 3);
 });
+
+test("skills bound decorative layers to the section", async () => {
+    const layout = await page.locator("#skills").evaluate((section) => {
+        const styles = getComputedStyle(section);
+        return {
+            position: styles.position,
+            overflowX: styles.overflowX,
+            overflowY: styles.overflowY,
+        };
+    });
+
+    assert.deepEqual(layout, {
+        position: "relative",
+        overflowX: "hidden",
+        overflowY: "hidden",
+    });
+});
+
+test("skills preserve inline gutters at tablet and desktop widths", async () => {
+    try {
+        for (const width of [561, 900, 1152]) {
+            await page.setViewportSize({ width, height: 1000 });
+            const padding = await page.locator("#skills").evaluate((section) => {
+                const styles = getComputedStyle(section);
+                return {
+                    start: Number.parseFloat(styles.paddingInlineStart),
+                    end: Number.parseFloat(styles.paddingInlineEnd),
+                };
+            });
+
+            assert.ok(padding.start >= 20, `expected a start gutter at ${width}px, received ${padding.start}px`);
+            assert.ok(padding.end >= 20, `expected an end gutter at ${width}px, received ${padding.end}px`);
+        }
+    } finally {
+        await page.setViewportSize({ width: 1440, height: 1000 });
+    }
+});

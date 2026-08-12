@@ -1462,28 +1462,65 @@ textarea {
   content: "";
 }
 
-.cerebrium-skills .technology-card {
-  border: 0;
-  border-radius: 10px;
+.skill-group-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.skill-group-card {
+  min-width: 0;
+  padding: clamp(1.5rem, 3vw, 2rem);
+  border-radius: 15px;
   color: var(--cerebrium-navy);
   background: var(--cerebrium-ice);
-  box-shadow: none;
 }
 
-.cerebrium-skills .technology-card:hover {
-  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.18);
+.skill-group-card > svg {
+  color: var(--cerebrium-blue);
 }
 
-.cerebrium-skills .technology-card h3 {
+.skill-group-card h3 {
+  margin: 1.25rem 0 0;
   color: var(--cerebrium-navy);
+  font-size: 1.45rem;
   font-weight: 500;
 }
 
-.cerebrium-skills .technology-card p {
+.skill-group-card > p {
+  min-height: 4.5rem;
+  margin: 0.75rem 0 1.5rem;
   color: var(--cerebrium-navy-soft);
+  line-height: 1.5;
+}
+
+.skill-group-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.skill-group-list li {
+  padding: 0.45rem 0.65rem;
+  border: 1px solid var(--cerebrium-slate-deep);
+  border-radius: 999px;
+  color: var(--cerebrium-navy);
+  background: white;
   font-family: "IBM Plex Mono", ui-monospace, monospace;
-  font-size: 0.68rem;
-  text-transform: uppercase;
+  font-size: 0.65rem;
+}
+
+@media (max-width: 900px) {
+  .skill-group-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .skill-group-card > p {
+    min-height: 0;
+  }
 }
 
 /* Projects */

@@ -1,181 +1,52 @@
-"use client"
+import { BrainCircuit, Braces, Database } from "lucide-react";
+import { motion } from "framer-motion"; // eslint-disable-line
+import { skillGroups } from "@/data/portfolioData";
 
-import {
-  SiReact,
-  SiFigma,
-  SiTypescript,
-  SiNextdotjs,
-  SiTailwindcss,
-  SiGit,
-  SiSupabase,
-  SiNodedotjs,
-  SiMongodb,
-  SiPrisma,
-  SiPostgresql,
-  SiJavascript,
-  SiPython,
-  SiExpress,
-} from "react-icons/si"
-import { motion, AnimatePresence } from "framer-motion"; // eslint-disable-line
+const groupIcons = {
+    ai: BrainCircuit,
+    data: Database,
+    engineering: Braces,
+};
 
-const TechnologyCard = ({ icon, name, description }) => {
-  return (
-    <motion.div 
-      className="technology-card rounded-xl p-6 flex items-center gap-4 h-32 transition-all duration-300 cursor-pointer group"
-      whileHover={{ 
-        scale: 1.02,
-        transition: { duration: 0.2 }
-      }}
-      whileTap={{ scale: 0.98 }}
-    >
-      <motion.div 
-        className="w-12 h-12 flex items-center justify-center flex-shrink-0 group-hover:rotate-12 transition-transform duration-300"
-        whileHover={{ rotate: 360, transition: { duration: 0.6 } }}
-      >
-        {icon}
-      </motion.div>
-      <div className="flex flex-col justify-center min-w-0 flex-1">
-        <h3 className="text-left text-lg font-medium text-gray-900 dark:text-white transition-colors duration-300 group-hover:text-blue-500 mb-1 truncate">{name}</h3>
-        <p className="text-left text-sm text-gray-500 dark:text-zinc-400 transition-colors duration-300 line-clamp-2">{description}</p>
-      </div>
-    </motion.div>
-  )
-}
-
-export const SkillsSection = () => {
-    const CurrentTechnologies = () => {
-        const technologies = [
-            {
-                icon: <SiNextdotjs className="w-8 h-8 text-black dark:text-white" />,
-                name: "NextJS",
-                description: "React framework",
-            },
-            {
-                icon: <SiTypescript className="w-8 h-8 text-[#3178C6]" />,
-                name: "TypeScript",
-                description: "JavaScript but better",
-            },
-            {
-                icon: <SiReact className="w-8 h-8 text-[#61DAFB]" />,
-                name: "React",
-                description: "JavaScript Library",
-            },
-            {
-                icon: <SiNodedotjs className="w-8 h-8 text-[#339933]" />,
-                name: "NodeJS",
-                description: "Backend",
-            },
-            {
-                icon: <SiTailwindcss className="w-8 h-8 text-[#06B6D4]" />,
-                name: "Tailwind",
-                description: "CSS framework",
-            },
-            {
-                icon: <SiGit className="w-8 h-8 text-[#F05032]" />,
-                name: "Git",
-                description: "Version control",
-            },
-            {
-                icon: <SiSupabase className="w-8 h-8 text-[#3ECF8E]" />,
-                name: "Supabase",
-                description: "Backend tool",
-            },
-            {
-                icon: <SiJavascript className="w-8 h-8 text-[#F0DB4F]" />,
-                name: "JavaScript",
-                description: "TypeScript but worse",
-            },
-            {
-                icon: <SiExpress className="w-8 h-8 text-[#2D3748]" />,
-                name: "Express",
-                description: "Backend framework",
-            },
-            {
-                icon: <SiPostgresql className="w-8 h-8 text-[#4169E1]" />,
-                name: "PostgreSQL",
-                description: "OR database system",
-            },
-            {
-                icon: <SiPython className="w-8 h-8 text-[#306998]" />,
-                name: "Python",
-                description: "Not the snake",
-            },
-        ]
-
-        const cardVariants = {
-            hidden: { opacity: 0, y: 60, scale: 0.9 },
-            visible: (i) => ({
-                opacity: 1,
-                y: 0,
-                scale: 1,
-                transition: {
-                    delay: i * 0.1,
-                    duration: 0.6,
-                    ease: "easeOut",
-                    type: "spring",
-                    stiffness: 100,
-                    damping: 10,
-                },
-            }),
-        }
-
-        return (
+export const SkillsSection = () => (
+    <section id="skills" className="cerebrium-dark-section cerebrium-skills">
+        <div className="mx-auto max-w-6xl relative z-10">
             <motion.div
-                id="skills"
-                className="cerebrium-dark-section cerebrium-skills min-h-screen py-24 px-8 flex flex-col justify-center items-center relative overflow-hidden"
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.2 }}
+                className="text-center mb-16"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true }}
             >
-                {/* Background decoration */}
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent pointer-events-none" />
-                
-                <div className="mx-auto max-w-5xl relative z-10">
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6 }}
-                        viewport={{ once: true }}
-                        className="text-center mb-16"
-                        >
-                            <p className="cerebrium-kicker cerebrium-section-kicker">Selected toolkit</p>
-                            <motion.h1 
-                                className="cerebrium-section-title cerebrium-section-title--light"
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 0.7, delay: 0.2 }}
-                            viewport={{ once: true }}
-                        >
-                            Current Technologies
-                        </motion.h1>
-                        <motion.p 
-                            className="cerebrium-section-copy cerebrium-section-copy--light"
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6, delay: 0.4 }}
-                            viewport={{ once: true }}
-                        >
-                        I'm proficient in a range of modern technologies that empower me to build highly functional solutions. These
-                        are some of my main technologies.
-                        </motion.p>
-                    </motion.div>
-
-                    <motion.div 
-                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true, amount: 0.2 }}
-                    >
-                        {technologies.map((tech, index) => (
-                            <motion.div key={index} custom={index} variants={cardVariants}>
-                                <TechnologyCard icon={tech.icon} name={tech.name} description={tech.description} />
-                            </motion.div>
-                        ))}
-                    </motion.div>
-                </div>
+                <p className="cerebrium-kicker cerebrium-section-kicker">Applied toolkit</p>
+                <h2 className="cerebrium-section-title cerebrium-section-title--light">Capabilities</h2>
+                <p className="cerebrium-section-copy cerebrium-section-copy--light">
+                    Tools I use to move from raw information to working AI and data products.
+                </p>
             </motion.div>
-        )
-    }
 
-    return <CurrentTechnologies />
-}
+            <div className="skill-group-grid">
+                {skillGroups.map((group, index) => {
+                    const Icon = groupIcons[group.icon];
+                    return (
+                        <motion.article
+                            key={group.id}
+                            className="skill-group-card"
+                            initial={{ opacity: 0, y: 28 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: index * 0.08 }}
+                            viewport={{ once: true, amount: 0.3 }}
+                        >
+                            <Icon size={28} aria-hidden="true" />
+                            <h3>{group.title}</h3>
+                            <p>{group.description}</p>
+                            <ul className="skill-group-list">
+                                {group.skills.map((skill) => <li key={skill}>{skill}</li>)}
+                            </ul>
+                        </motion.article>
+                    );
+                })}
+            </div>
+        </div>
+    </section>
+);

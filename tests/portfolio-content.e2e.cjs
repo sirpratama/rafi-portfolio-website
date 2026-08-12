@@ -60,3 +60,14 @@ test("education presents the UQ and UI double-degree path with relevant coursewo
     await assert.doesNotReject(() => about.getByText("Intro to AI and Data Science", { exact: true }).waitFor());
     await assert.doesNotReject(() => about.getByText(/Double Degree Program/).first().waitFor());
 });
+
+test("skills are organized by recruiter-relevant capabilities", async () => {
+    const skills = page.locator("#skills");
+    for (const group of ["AI & Machine Learning", "Data & Business Intelligence", "Product Engineering"]) {
+        await assert.doesNotReject(() => skills.getByRole("heading", { name: group }).waitFor());
+    }
+    for (const tool of ["LangChain", "Power BI", "Docker Compose"]) {
+        await assert.doesNotReject(() => skills.getByText(tool, { exact: true }).waitFor());
+    }
+    assert.equal(await skills.locator(".skill-group-card").count(), 3);
+});

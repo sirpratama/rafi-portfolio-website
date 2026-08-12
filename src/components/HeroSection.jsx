@@ -1,5 +1,6 @@
 import { ArrowDownRight, Download } from "lucide-react";
 import { motion } from "framer-motion"; // eslint-disable-line
+import { heroContent } from "@/data/portfolioData";
 
 export const HeroSection = () => {
     return (
@@ -12,7 +13,7 @@ export const HeroSection = () => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.7, delay: 0.35, ease: "easeOut" }}
                     >
-                        Building digital products that <span>scale</span> with you
+                        {heroContent.headline}
                     </motion.h1>
 
                     <motion.div
@@ -21,10 +22,7 @@ export const HeroSection = () => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.65, delay: 0.55 }}
                     >
-                        <p>
-                            From frontend to backend, I turn ambitious ideas into reliable,
-                            thoughtful products built for real people.
-                        </p>
+                        <p>{heroContent.supportingCopy}</p>
                         <div className="cerebrium-hero-actions">
                             <a href="#projects" className="cerebrium-button cerebrium-button--blue">
                                 View projects

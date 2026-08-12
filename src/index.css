@@ -1873,6 +1873,91 @@ body {
   }
 }
 
+.cerebrium-proof {
+  position: relative;
+  z-index: 3;
+  padding: 0 clamp(1rem, 3vw, 2.5rem);
+}
+
+.cerebrium-proof-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  max-width: 90rem;
+  margin: -1.75rem auto 0;
+  overflow: hidden;
+  border: 1px solid rgba(47, 107, 255, 0.2);
+  border-radius: 15px;
+  background: rgba(6, 24, 61, 0.82);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(18px);
+}
+
+.cerebrium-proof-item {
+  min-width: 0;
+  padding: 1.5rem;
+}
+
+.cerebrium-proof-item + .cerebrium-proof-item {
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cerebrium-proof-item strong,
+.cerebrium-proof-item span {
+  display: block;
+}
+
+.cerebrium-proof-item strong {
+  color: white;
+  font-size: clamp(1.6rem, 2.6vw, 2.35rem);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+}
+
+.cerebrium-proof-item span {
+  margin-top: 0.35rem;
+  color: var(--cerebrium-blue);
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+}
+
+.cerebrium-proof-item p {
+  margin: 0.75rem 0 0;
+  color: var(--cerebrium-slate-deep);
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+@media (max-width: 900px) {
+  .cerebrium-proof-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cerebrium-proof-item:nth-child(3) {
+    border-left: 0;
+  }
+
+  .cerebrium-proof-item:nth-child(n + 3) {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+}
+
+@media (max-width: 560px) {
+  .cerebrium-proof {
+    padding-inline: 1rem;
+  }
+
+  .cerebrium-proof-grid {
+    grid-template-columns: 1fr;
+    margin-top: -1rem;
+  }
+
+  .cerebrium-proof-item + .cerebrium-proof-item {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 0;
+  }
+}
+
 @media (max-width: 560px) {
   .cerebrium-brand-logo {
     width: 1.75rem;

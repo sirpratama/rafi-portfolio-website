@@ -20,7 +20,6 @@ export const Footer = () => {
 
             <div className="cerebrium-footer-bottom">
                 <p>&copy; {new Date().getFullYear()} Rafi Nazir</p>
-                <p>Designed and built in Jakarta</p>
             </div>
         </footer>
     );

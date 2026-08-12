@@ -48,3 +48,48 @@ test("scrolling experience entries updates the pinned journey index", async () =
     );
     assert.ok(railTop > 80 && railTop < 300, `Expected pinned rail, received top=${railTop}`);
 });
+
+test("reduced motion removes Framer transforms and makes About navigation immediate", async () => {
+    const reducedPage = await browser.newPage({ viewport: { width: 390, height: 844 } });
+
+    try {
+        await reducedPage.emulateMedia({ reducedMotion: "reduce" });
+        await reducedPage.addInitScript(() => {
+            window.__entryScrollBehaviors = [];
+
+            Element.prototype.scrollIntoView = function scrollIntoView(options) {
+                window.__entryScrollBehaviors.push(options?.behavior ?? "auto");
+            };
+        });
+        await reducedPage.goto(baseUrl, { waitUntil: "commit" });
+        const heroHeadline = reducedPage.locator(".cerebrium-hero-headline");
+        await heroHeadline.waitFor({ state: "attached" });
+
+        assert.equal(
+            await heroHeadline.evaluate((element) => element.style.transform),
+            "none",
+        );
+        await reducedPage.waitForLoadState("networkidle");
+
+        const buttons = reducedPage.locator(".about-timeline-nav button");
+        await buttons.nth(1).click();
+
+        assert.deepEqual(
+            await reducedPage.evaluate(() => window.__entryScrollBehaviors),
+            ["auto"],
+        );
+        assert.equal(await buttons.nth(1).getAttribute("data-active"), "true");
+        assert.deepEqual(
+            await buttons.evaluateAll((items) => items.slice(0, 2).map((item) => ({
+                opacity: item.style.opacity,
+                transform: item.style.transform,
+            }))),
+            [
+                { opacity: "0.32", transform: "translate(0px, 0px)" },
+                { opacity: "1", transform: "translate(8px, 0px)" },
+            ],
+        );
+    } finally {
+        await reducedPage.close();
+    }
+});

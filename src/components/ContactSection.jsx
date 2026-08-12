@@ -65,13 +65,13 @@ export const ContactSection = () => {
             icon: Mail,
             title: "Email",
             value: "mnazirpratama@gmail.com",
-            href: "mailto:sirpratama2003@gmail.com"
+            href: "mailto:mnazirpratama@gmail.com"
         },
         {
             icon: Phone,
             title: "Phone",
             value: "+62 812-8454-7459",
-            href: "tel:+6285730303030"
+            href: "tel:+6281284547459"
         },
         {
             icon: MapPin,

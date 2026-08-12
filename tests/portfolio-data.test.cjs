@@ -23,7 +23,7 @@ test("the approved recruiter proof is complete and source-backed", () => {
 test("professional experience and double-degree education are prioritized", () => {
     assert.deepEqual(
         portfolio.experienceData.map(({ organization }) => organization),
-        ["Bank Indonesia", "Infovesta Utama", "Google Developer Groups on Campus UI"],
+        ["Central Bank of Indonesia", "Infovesta Utama", "Google Developer Groups on Campus UI"],
     );
     assert.deepEqual(
         portfolio.educationData.map(({ organization }) => organization),

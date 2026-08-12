@@ -4,6 +4,22 @@ import { motion } from "framer-motion"; // eslint-disable-line
 
 const PROJECT_FALLBACK = "/projects/project-placeholder.svg";
 
+const handleProjectImageError = ({ currentTarget }) => {
+    const failedPath = new URL(currentTarget.currentSrc || currentTarget.src).pathname;
+
+    if (currentTarget.dataset.fallbackApplied === "true" || failedPath === PROJECT_FALLBACK) {
+        currentTarget.removeAttribute("src");
+        currentTarget.alt = "";
+        currentTarget.setAttribute("aria-hidden", "true");
+        currentTarget.dataset.imageState = "unavailable";
+        return;
+    }
+
+    currentTarget.dataset.fallbackApplied = "true";
+    currentTarget.src = PROJECT_FALLBACK;
+    currentTarget.alt = "";
+};
+
 const ProjectImage = ({ project }) => (
     <img
         src={project.image}
@@ -12,11 +28,7 @@ const ProjectImage = ({ project }) => (
         height="540"
         loading="lazy"
         decoding="async"
-        onError={({ currentTarget }) => {
-            currentTarget.onerror = null;
-            currentTarget.src = PROJECT_FALLBACK;
-            currentTarget.alt = "";
-        }}
+        onError={handleProjectImageError}
     />
 );
 
@@ -33,7 +45,6 @@ export const ProjectsSection = () => {
                     viewport={{ once: true }}
                     className="text-center mb-16"
                 >
-                    <p className="cerebrium-kicker cerebrium-section-kicker">Selected work</p>
                     <motion.h2
                         className="cerebrium-section-title"
                         initial={{ opacity: 0, scale: 0.9 }}

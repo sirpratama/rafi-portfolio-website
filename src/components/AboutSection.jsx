@@ -1,5 +1,5 @@
-import { useLayoutEffect, useRef, useState } from "react";
-import { motion } from "framer-motion"; // eslint-disable-line
+import { useCallback, useLayoutEffect, useRef, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion"; // eslint-disable-line
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
@@ -77,6 +77,7 @@ const TimelineCard = ({ item }) => {
 export const AboutSection = () => {
     const [activeTab, setActiveTab] = useState("experience");
     const [activeIndex, setActiveIndex] = useState(0);
+    const shouldReduceMotion = useReducedMotion();
     const sectionRef = useRef(null);
     const layoutRef = useRef(null);
     const railRef = useRef(null);
@@ -86,28 +87,33 @@ export const AboutSection = () => {
 
     const currentData = activeTab === "experience" ? experienceData : educationData;
 
-    const setActiveJourneyItem = (index) => {
+    const setActiveJourneyItem = useCallback((index) => {
         setActiveIndex(index);
 
         const buttons = navRef.current?.querySelectorAll("button");
         if (!buttons?.length) return;
 
-        gsap.to(buttons, {
-            opacity: 0.32,
-            x: 0,
-            duration: 0.28,
-            overwrite: "auto",
-        });
-
         const activeButton = buttons[index];
 
-        gsap.to(activeButton, {
-            opacity: 1,
-            x: 8,
-            duration: 0.4,
-            ease: "power2.out",
-            overwrite: "auto",
-        });
+        if (shouldReduceMotion) {
+            gsap.set(buttons, { opacity: 0.32, x: 0 });
+            gsap.set(activeButton, { opacity: 1, x: 8 });
+        } else {
+            gsap.to(buttons, {
+                opacity: 0.32,
+                x: 0,
+                duration: 0.28,
+                overwrite: "auto",
+            });
+
+            gsap.to(activeButton, {
+                opacity: 1,
+                x: 8,
+                duration: 0.4,
+                ease: "power2.out",
+                overwrite: "auto",
+            });
+        }
 
         if (window.innerWidth <= 900 && activeButton) {
             const targetLeft =
@@ -116,12 +122,10 @@ export const AboutSection = () => {
 
             navRef.current.scrollTo({
                 left: Math.max(0, targetLeft),
-                behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
-                    ? "auto"
-                    : "smooth",
+                behavior: shouldReduceMotion ? "auto" : "smooth",
             });
         }
-    };
+    }, [shouldReduceMotion]);
 
     useLayoutEffect(() => {
         const entries = entriesRef.current.slice(0, currentData.length).filter(Boolean);
@@ -142,20 +146,24 @@ export const AboutSection = () => {
                 });
             });
 
-            gsap.fromTo(
-                progressRef.current,
-                { scaleY: 0, transformOrigin: "top center" },
-                {
-                    scaleY: 1,
-                    ease: "none",
-                    scrollTrigger: {
-                        trigger: layoutRef.current,
-                        start: "top 45%",
-                        end: "bottom 55%",
-                        scrub: true,
+            if (shouldReduceMotion) {
+                gsap.set(progressRef.current, { scaleY: 1, transformOrigin: "top center" });
+            } else {
+                gsap.fromTo(
+                    progressRef.current,
+                    { scaleY: 0, transformOrigin: "top center" },
+                    {
+                        scaleY: 1,
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: layoutRef.current,
+                            start: "top 45%",
+                            end: "bottom 55%",
+                            scrub: true,
+                        },
                     },
-                },
-            );
+                );
+            }
 
             media.add("(min-width: 901px)", () => {
                 ScrollTrigger.create({
@@ -175,7 +183,7 @@ export const AboutSection = () => {
             media.revert();
             context.revert();
         };
-    }, [activeTab, currentData.length]);
+    }, [activeTab, currentData.length, setActiveJourneyItem, shouldReduceMotion]);
 
     const changeTab = (tab) => {
         if (tab === activeTab) return;
@@ -185,8 +193,9 @@ export const AboutSection = () => {
     };
 
     const scrollToEntry = (index) => {
+        setActiveJourneyItem(index);
         entriesRef.current[index]?.scrollIntoView({
-            behavior: "smooth",
+            behavior: shouldReduceMotion ? "auto" : "smooth",
             block: "center",
         });
     };
@@ -207,7 +216,6 @@ export const AboutSection = () => {
                     viewport={{ once: true }}
                     className="text-center mb-12"
                 >
-                    <p className="cerebrium-kicker cerebrium-section-kicker">Journey &amp; background</p>
                     <motion.h2
                         className="cerebrium-section-title"
                         initial={{ opacity: 0, scale: 0.9 }}
@@ -303,29 +311,12 @@ export const AboutSection = () => {
                         ))}
                     </div>
                 </div>
-
-                {activeTab === "experience" ? (
-                    <section className="about-supporting-block" aria-labelledby="earlier-leadership-title">
-                        <p className="cerebrium-kicker">Supporting experience</p>
-                        <h3 id="earlier-leadership-title">Earlier leadership</h3>
-                        <div className="about-supporting-grid">
-                            {earlierLeadership.map((item) => (
-                                <article key={item.id}>
-                                    <h4>{item.title}</h4>
-                                    <p>{item.summary}</p>
-                                </article>
-                            ))}
-                        </div>
-                    </section>
-                ) : (
                     <section className="about-coursework" aria-labelledby="coursework-title">
-                        <p className="cerebrium-kicker">Academic foundation</p>
                         <h3 id="coursework-title">Relevant coursework</h3>
                         <ul>
                             {coursework.map((course) => <li key={course}>{course}</li>)}
                         </ul>
                     </section>
-                )}
             </div>
         </section>
     );

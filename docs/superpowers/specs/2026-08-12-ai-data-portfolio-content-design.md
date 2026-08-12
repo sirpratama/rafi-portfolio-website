@@ -63,7 +63,7 @@ The existing `View projects` and `Download CV` actions remain. The Download CV a
 
 A compact proof strip will appear directly below the hero. It will contain four recruiter-scannable outcomes:
 
-- `75% faster` - memo-routing decisions through a local-LLM RAG pipeline at Bank Indonesia
+- `75% faster` - memo-routing decisions through a local-LLM RAG pipeline at Central Bank of Indonesia
 - `Up to 60%` - improvement in Terms of Reference submission tracking efficiency
 - `900+ companies` - IDX-listed companies covered by the Infovesta data workflow
 - `2 hackathon honors` - third place at Find-IT UGM 2026 and Best Tech Implementation for Career Path Compass Hub
@@ -74,7 +74,7 @@ Each item will use a prominent value, a short label, and enough context to avoid
 
 The Experience tab will prioritize professional and directly relevant technical work.
 
-### Bank Indonesia
+### Central Bank of Indonesia
 
 - Date: June 2026 to present
 - Role: Data Intern, Department of Innovation and Digitalization
@@ -253,7 +253,7 @@ Implementation will add focused regression coverage that verifies:
 
 - The hero contains the approved AI and data positioning.
 - The four proof metrics and their context render.
-- Bank Indonesia, Infovesta, and GDG appear in the primary Experience view.
+- Central Bank of Indonesia, Infovesta, and GDG appear in the primary Experience view.
 - UQ and UI double-degree details appear in Education.
 - The three skill groups render with representative tools.
 - The four selected project cards have correct source links.

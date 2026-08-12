@@ -8,7 +8,7 @@ export const proofMetrics = [
         id: "memo-routing",
         value: "75% faster",
         label: "Memo-routing decisions",
-        context: "Local-LLM RAG pipeline at Bank Indonesia",
+        context: "Local-LLM RAG pipeline at Central Bank of Indonesia",
     },
     {
         id: "tor-tracking",
@@ -33,7 +33,7 @@ export const proofMetrics = [
 export const experienceData = [
     {
         id: "bank-indonesia",
-        organization: "Bank Indonesia",
+        organization: "Central Bank of Indonesia",
         role: "Data Intern, Department of Innovation & Digitalization",
         period: "Jun 2026 - Present",
         location: "Jakarta, Indonesia",

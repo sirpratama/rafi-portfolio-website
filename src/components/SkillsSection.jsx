@@ -18,7 +18,6 @@ export const SkillsSection = () => (
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
             >
-                <p className="cerebrium-kicker cerebrium-section-kicker">Applied toolkit</p>
                 <h2 className="cerebrium-section-title cerebrium-section-title--light">Capabilities</h2>
                 <p className="cerebrium-section-copy cerebrium-section-copy--light">
                     Tools I use to move from raw information to working AI and data products.

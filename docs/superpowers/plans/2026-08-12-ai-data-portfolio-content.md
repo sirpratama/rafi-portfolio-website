@@ -105,7 +105,7 @@ test("the approved recruiter proof is complete and source-backed", () => {
 test("professional experience and double-degree education are prioritized", () => {
     assert.deepEqual(
         portfolio.experienceData.map(({ organization }) => organization),
-        ["Bank Indonesia", "Infovesta Utama", "Google Developer Groups on Campus UI"],
+        ["Central Bank of Indonesia", "Infovesta Utama", "Google Developer Groups on Campus UI"],
     );
     assert.deepEqual(
         portfolio.educationData.map(({ organization }) => organization),
@@ -164,7 +164,7 @@ export const proofMetrics = [
         id: "memo-routing",
         value: "75% faster",
         label: "Memo-routing decisions",
-        context: "Local-LLM RAG pipeline at Bank Indonesia",
+        context: "Local-LLM RAG pipeline at Central Bank of Indonesia",
     },
     {
         id: "tor-tracking",
@@ -189,7 +189,7 @@ export const proofMetrics = [
 export const experienceData = [
     {
         id: "bank-indonesia",
-        organization: "Bank Indonesia",
+        organization: "Central Bank of Indonesia",
         role: "Data Intern, Department of Innovation & Digitalization",
         period: "Jun 2026 - Present",
         location: "Jakarta, Indonesia",
@@ -435,7 +435,7 @@ test("the proof strip exposes four quantified outcomes with context", async () =
         await assert.doesNotReject(() => proof.getByText(value, { exact: true }).waitFor());
     }
 
-    await assert.doesNotReject(() => proof.getByText(/Bank Indonesia/i).waitFor());
+    await assert.doesNotReject(() => proof.getByText(/Central Bank of Indonesia/i).waitFor());
     await assert.doesNotReject(() => proof.getByText(/Infovesta/i).waitFor());
 });
 ```
@@ -644,7 +644,7 @@ Append these tests to `tests/portfolio-content.e2e.cjs`:
 ```js
 test("professional experience prioritizes AI and data work", async () => {
     const about = page.locator("#about");
-    for (const organization of ["Bank Indonesia", "Infovesta Utama", "Google Developer Groups on Campus UI"]) {
+    for (const organization of ["Central Bank of Indonesia", "Infovesta Utama", "Google Developer Groups on Campus UI"]) {
         await assert.doesNotReject(() => about.getByText(organization, { exact: true }).first().waitFor());
     }
     await assert.doesNotReject(() => about.getByText(/75%/).first().waitFor());

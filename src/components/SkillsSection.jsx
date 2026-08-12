@@ -21,7 +21,7 @@ import { motion, AnimatePresence } from "framer-motion"; // eslint-disable-line
 const TechnologyCard = ({ icon, name, description }) => {
   return (
     <motion.div 
-      className="rounded-xl p-6 flex items-center gap-4 h-32 transition-all duration-300 hover:-translate-y-2 bg-white border border-gray-200 hover:border-gray-300 hover:shadow-xl dark:bg-zinc-900/60 dark:border-zinc-800 dark:hover:shadow-[0_0_20px_rgba(139,92,246,0.3)] dark:hover:border-zinc-700 cursor-pointer group"
+      className="technology-card rounded-xl p-6 flex items-center gap-4 h-32 transition-all duration-300 cursor-pointer group"
       whileHover={{ 
         scale: 1.02,
         transition: { duration: 0.2 }
@@ -35,7 +35,7 @@ const TechnologyCard = ({ icon, name, description }) => {
         {icon}
       </motion.div>
       <div className="flex flex-col justify-center min-w-0 flex-1">
-        <h3 className="text-left text-lg font-medium text-gray-900 dark:text-white transition-colors duration-300 group-hover:text-purple-500 mb-1 truncate">{name}</h3>
+        <h3 className="text-left text-lg font-medium text-gray-900 dark:text-white transition-colors duration-300 group-hover:text-blue-500 mb-1 truncate">{name}</h3>
         <p className="text-left text-sm text-gray-500 dark:text-zinc-400 transition-colors duration-300 line-clamp-2">{description}</p>
       </div>
     </motion.div>
@@ -122,13 +122,13 @@ export const SkillsSection = () => {
         return (
             <motion.div
                 id="skills"
-                className="bg-gray-50 text-gray-900 dark:bg-black dark:text-white min-h-screen py-24 px-8 flex flex-col justify-center items-center relative overflow-hidden"
+                className="cerebrium-dark-section cerebrium-skills min-h-screen py-24 px-8 flex flex-col justify-center items-center relative overflow-hidden"
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.2 }}
             >
                 {/* Background decoration */}
-                <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent pointer-events-none" />
                 
                 <div className="mx-auto max-w-5xl relative z-10">
                     <motion.div
@@ -137,23 +137,19 @@ export const SkillsSection = () => {
                         transition={{ duration: 0.6 }}
                         viewport={{ once: true }}
                         className="text-center mb-16"
-                    >
-                        <motion.h1 
-                            className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent leading-tight pb-2"
+                        >
+                            <p className="cerebrium-kicker cerebrium-section-kicker">Selected toolkit</p>
+                            <motion.h1 
+                                className="cerebrium-section-title cerebrium-section-title--light"
                             initial={{ opacity: 0, scale: 0.9 }}
                             whileInView={{ opacity: 1, scale: 1 }}
                             transition={{ duration: 0.7, delay: 0.2 }}
                             viewport={{ once: true }}
-                            style={{ 
-                                WebkitBackgroundClip: 'text',
-                                WebkitTextFillColor: 'transparent',
-                                paddingBottom: '8px'
-                            }}
                         >
                             Current Technologies
                         </motion.h1>
                         <motion.p 
-                            className="text-gray-600 dark:text-zinc-400 text-lg max-w-3xl mx-auto leading-relaxed"
+                            className="cerebrium-section-copy cerebrium-section-copy--light"
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6, delay: 0.4 }}

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img" aria-labelledby="title description">
+  <title id="title">Project preview placeholder</title>
+  <desc id="description">A lightweight abstract browser interface in cobalt blue.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#eaf1ff"/>
+      <stop offset="1" stop-color="#dbeafe"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#2f6bff"/>
+      <stop offset="1" stop-color="#3b82f6"/>
+    </linearGradient>
+  </defs>
+  <rect width="960" height="540" rx="32" fill="url(#background)"/>
+  <g opacity=".22" stroke="#3b82f6" stroke-width="1">
+    <path d="M0 90h960M0 180h960M0 270h960M0 360h960M0 450h960"/>
+    <path d="M120 0v540M240 0v540M360 0v540M480 0v540M600 0v540M720 0v540M840 0v540"/>
+  </g>
+  <rect x="155" y="85" width="650" height="370" rx="24" fill="#fff" fill-opacity=".82" stroke="#93c5fd" stroke-width="3"/>
+  <rect x="155" y="85" width="650" height="58" rx="24" fill="#fff" fill-opacity=".92"/>
+  <circle cx="196" cy="114" r="8" fill="#93c5fd"/>
+  <circle cx="222" cy="114" r="8" fill="#93c5fd"/>
+  <circle cx="248" cy="114" r="8" fill="#dbeafe"/>
+  <rect x="198" y="190" width="250" height="24" rx="12" fill="url(#accent)"/>
+  <rect x="198" y="235" width="450" height="14" rx="7" fill="#a1a1aa" fill-opacity=".48"/>
+  <rect x="198" y="267" width="375" height="14" rx="7" fill="#a1a1aa" fill-opacity=".34"/>
+  <rect x="198" y="328" width="166" height="70" rx="16" fill="#eaf1ff" stroke="#93c5fd"/>
+  <rect x="384" y="328" width="166" height="70" rx="16" fill="#dbeafe" stroke="#93c5fd"/>
+  <rect x="570" y="328" width="148" height="70" rx="16" fill="#eff6ff" stroke="#60a5fa"/>
+  <text x="480" y="492" text-anchor="middle" fill="#174fd3" font-family="Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="4">PROJECT PREVIEW</text>
+</svg>

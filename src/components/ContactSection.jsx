@@ -91,10 +91,10 @@ export const ContactSection = () => {
     return (
         <section 
             id="contact"
-            className="py-24 px-8 bg-gray-50 dark:bg-zinc-950 relative overflow-hidden"
+            className="cerebrium-dark-section cerebrium-contact py-24 px-8 relative overflow-hidden"
         >
             {/* Background decoration */}
-            <div className="absolute inset-0 bg-gradient-to-bl from-purple-500/5 to-blue-500/5 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-bl from-blue-500/5 to-blue-500/5 pointer-events-none" />
             
             <div className="container mx-auto max-w-5xl relative z-10">
                 {/* Header */}
@@ -105,22 +105,18 @@ export const ContactSection = () => {
                     viewport={{ once: true }}
                     className="text-center mb-16"
                 >
+                    <p className="cerebrium-kicker cerebrium-section-kicker">Open to opportunities</p>
                     <motion.h2
-                        className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent leading-tight pb-2"
+                        className="cerebrium-section-title cerebrium-section-title--light"
                         initial={{ opacity: 0, scale: 0.9 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.7, delay: 0.2 }}
                         viewport={{ once: true }}
-                        style={{
-                            WebkitBackgroundClip: 'text',
-                            WebkitTextFillColor: 'transparent',
-                            paddingBottom: '8px'
-                        }}
                     >
                         Get In Touch
                     </motion.h2>
                     <motion.p
-                        className="text-gray-600 dark:text-zinc-400 text-lg max-w-3xl mx-auto leading-relaxed"
+                        className="cerebrium-section-copy cerebrium-section-copy--light"
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.4 }}
@@ -133,7 +129,7 @@ export const ContactSection = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
                     {/* Contact Information */}
                     <motion.div
-                        className="space-y-8"
+                        className="cerebrium-contact-info space-y-8"
                         initial={{ opacity: 0, x: -30 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.6, delay: 0.6 }}
@@ -163,7 +159,7 @@ export const ContactSection = () => {
                                         whileHover={{ x: 5 }}
                                     >
                                         <motion.div
-                                            className="p-3 rounded-full bg-white dark:bg-zinc-900 border-2 border-purple-200 dark:border-purple-800 group-hover:border-purple-400 dark:group-hover:border-purple-600 shadow-sm group-hover:shadow-lg transition-all duration-300"
+                                            className="p-3 rounded-full bg-white dark:bg-zinc-900 border-2 border-blue-200 dark:border-blue-800 group-hover:border-blue-400 dark:group-hover:border-blue-600 shadow-sm group-hover:shadow-lg transition-all duration-300"
                                             whileHover={{ 
                                                 scale: 1.1,
                                                 rotate: 5,
@@ -171,7 +167,7 @@ export const ContactSection = () => {
                                             }}
                                             whileTap={{ scale: 0.95 }}
                                         >
-                                            <IconComponent className="h-6 w-6 text-purple-600 dark:text-purple-400" />
+                                            <IconComponent className="h-6 w-6 text-blue-600 dark:text-blue-400" />
                                         </motion.div>
                                         <div className="flex-1">
                                             <motion.h4 
@@ -183,7 +179,7 @@ export const ContactSection = () => {
                                             {item.href ? (
                                                 <motion.a
                                                     href={item.href}
-                                                    className="text-gray-600 dark:text-zinc-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors duration-300"
+                                                    className="text-gray-600 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300"
                                                     whileHover={{ scale: 1.02 }}
                                                 >
                                                     {item.value}
@@ -225,7 +221,7 @@ export const ContactSection = () => {
                                             href={social.href}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="p-3 rounded-full bg-white dark:bg-zinc-900 border-2 border-gray-200 dark:border-zinc-800 hover:border-purple-400 dark:hover:border-purple-600 text-gray-600 dark:text-zinc-400 hover:text-purple-600 dark:hover:text-purple-400 transition-all duration-300 shadow-sm hover:shadow-lg group"
+                                            className="p-3 rounded-full bg-white dark:bg-zinc-900 border-2 border-gray-200 dark:border-zinc-800 hover:border-blue-400 dark:hover:border-blue-600 text-gray-600 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 shadow-sm hover:shadow-lg group"
                                             initial={{ opacity: 0, scale: 0.8 }}
                                             whileInView={{ opacity: 1, scale: 1 }}
                                             transition={{ duration: 0.4, delay: 1.3 + index * 0.1 }}
@@ -248,7 +244,7 @@ export const ContactSection = () => {
 
                     {/* Contact Form */}
                     <motion.div
-                        className="bg-white dark:bg-zinc-900/60 p-8 rounded-xl shadow-lg border border-gray-200 dark:border-zinc-800 hover:border-purple-300 dark:hover:border-purple-500 transition-all duration-300"
+                        className="cerebrium-contact-form p-8 rounded-xl transition-all duration-300"
                         initial={{ opacity: 0, x: 30 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.6, delay: 0.6 }}
@@ -280,7 +276,7 @@ export const ContactSection = () => {
                                     id="name"
                                     name="from_name"
                                     required
-                                    className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
+                                    className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
                                     placeholder="Your Name..."
                                     whileFocus={{ scale: 1.02 }}
                                 />
@@ -300,7 +296,7 @@ export const ContactSection = () => {
                                     id="email"
                                     name="from_email"
                                     required
-                                    className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
+                                    className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
                                     placeholder="Your Email..."
                                     whileFocus={{ scale: 1.02 }}
                                 />
@@ -320,7 +316,7 @@ export const ContactSection = () => {
                                     name="message"
                                     required
                                     rows="5"
-                                    className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300 resize-none"
+                                    className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 resize-none"
                                     placeholder="Your Message..."
                                     whileFocus={{ scale: 1.02 }}
                                 />

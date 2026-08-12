@@ -1,223 +1,123 @@
-import { ExternalLink, Github } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion"; // eslint-disable-line
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ExternalLink, Github } from "lucide-react";
+import { motion } from "framer-motion"; // eslint-disable-line
 
 const projects = [
     {
         id: 1,
         title: "Career Path Compass Hub",
-        description: "A platform for students to explore their career paths and find the best fit for them.",
-        image: "/projects/project 3.png",
-        tags: ["React","Typescript", "Node.js", "Express", "PostgreSQL", "Gemini API"],
+        description: "A platform for students to explore career paths and discover opportunities that fit their goals.",
+        image: "/projects/project-placeholder.svg",
+        tags: ["React", "TypeScript", "Gemini AI"],
         demoUrl: "https://career-path-compass-hub.vercel.app/",
-        githubUrl:"https://github.com/sirpratama/career-path-compass-hub"
+        githubUrl: "https://github.com/sirpratama/career-path-compass-hub",
     },
     {
         id: 2,
         title: "Golden Age of Video Games Analysis",
-        description: "A data analysis project that explores the golden age of video games, analyzing sales data and trends.",
-        image: "/projects/project 2.png",
-        tags: ["Python", "Pandas", "Matplotlib", "Seaborn", "NumPy", "SQL"],
+        description: "A data analysis project exploring the golden age of video games through sales data and industry trends.",
+        image: "/projects/project-placeholder.svg",
+        tags: ["Python", "Data Analysis", "SQL"],
         demoUrl: "https://github.com/sirpratama/golden_era_of_videogames",
-        githubUrl:"https://github.com/sirpratama/golden_era_of_videogames"
-    }
-]
+        githubUrl: "https://github.com/sirpratama/golden_era_of_videogames",
+    },
+];
 
 export const ProjectsSection = () => {
-    return <section id="projects" className="py-24 px-8 relative bg-gray-50 dark:bg-zinc-950 overflow-hidden">
-        {/* Background decoration */}
-        <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/5 to-purple-500/5 pointer-events-none" />
-        
-        <div className="mx-auto max-w-5xl relative z-10">
-            <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                viewport={{ once: true }}
-                className="text-center mb-16"
-            >
-                <motion.h2 
-                    className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-purple-500 bg-clip-text text-transparent leading-tight pb-2"
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.7, delay: 0.2 }}
-                    viewport={{ once: true }}
-                    style={{ 
-                        WebkitBackgroundClip: 'text',
-                        WebkitTextFillColor: 'transparent',
-                        paddingBottom: '8px'
-                    }}
-                >
-                    Projects
-                </motion.h2>
-                <motion.p 
-                    className="text-gray-600 dark:text-zinc-400 text-lg max-w-3xl mx-auto leading-relaxed"
-                    initial={{ opacity: 0, y: 20 }}
+    return (
+        <section id="projects" className="cerebrium-panel cerebrium-projects-panel py-24 px-8 relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/5 to-blue-500/5 pointer-events-none" />
+
+            <div className="mx-auto max-w-6xl relative z-10">
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.4 }}
+                    transition={{ duration: 0.6 }}
                     viewport={{ once: true }}
-            >
-                Here are some of the projects I've worked on.
-                </motion.p>
-            </motion.div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
-                {projects.map((project, key) => (
-                    <motion.div
-                        key={key}
-                        className="group bg-white dark:bg-zinc-900/60 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer border border-gray-200 dark:border-zinc-800 hover:border-purple-300 dark:hover:border-purple-500 max-w-sm w-full"
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true, amount: 0.3 }}
-                        variants={{
-                            hidden: { opacity: 0, y: 60, scale: 0.9, rotateY: -15 },
-                            visible: { 
-                                opacity: 1, 
-                                y: 0, 
-                                scale: 1, 
-                                rotateY: 0,
-                                transition: { 
-                                    duration: 0.7,
-                                    ease: "easeOut",
-                                    type: "spring",
-                                    stiffness: 100,
-                                    damping: 15
-                                } 
-                            }
-                        }}
-                        whileHover={{ 
-                            y: -10,
-                            scale: 1.03,
-                            rotateY: 5,
-                            transition: { duration: 0.3 }
-                        }}
-                        whileTap={{ scale: 0.98 }}
+                    className="text-center mb-16"
+                >
+                    <p className="cerebrium-kicker cerebrium-section-kicker">Selected work</p>
+                    <motion.h2
+                        className="cerebrium-section-title"
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.7, delay: 0.2 }}
+                        viewport={{ once: true }}
                     >
-                        <motion.div 
-                            className="h-48 overflow-hidden relative"
-                            whileHover={{ scale: 1.05 }}
-                            transition={{ duration: 0.4 }}
-                        >
-                            <motion.img 
-                                src={project.image} 
-                            alt={project.title} 
-                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                                initial={{ scale: 1.1 }}
-                                animate={{ scale: 1 }}
-                                transition={{ duration: 0.6 }}
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                        </motion.div>
+                        Projects
+                    </motion.h2>
+                    <motion.p
+                        className="cerebrium-section-copy"
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.4 }}
+                        viewport={{ once: true }}
+                    >
+                        Selected work across product engineering, AI, and data.
+                    </motion.p>
+                </motion.div>
 
-                        <motion.div 
-                            className="p-6"
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5, delay: 0.2 }}
-                            viewport={{ once: true }}
-                        >
-                            <motion.div 
-                                className="flex flex-wrap gap-2 mb-4"
-                                initial={{ opacity: 0 }}
-                                whileInView={{ opacity: 1 }}
-                                transition={{ duration: 0.6, delay: 0.3 }}
-                                viewport={{ once: true }}
-                            >
-                                {project.tags.map((tag, tagIndex) => (
-                                    <motion.span 
-                                        key={tag} 
-                                        className="px-3 py-1 text-xs font-medium border border-purple-200 dark:border-purple-700 rounded-full bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-colors duration-300"
-                                        initial={{ opacity: 0, scale: 0.8 }}
-                                        whileInView={{ opacity: 1, scale: 1 }}
-                                        transition={{ duration: 0.4, delay: 0.4 + tagIndex * 0.1 }}
-                                        viewport={{ once: true }}
-                                        whileHover={{ scale: 1.05 }}
-                                        whileTap={{ scale: 0.95 }}
-                                    >
-                                        {tag}
-                                    </motion.span>
+                <div className="projects-showcase-grid">
+                    {projects.map((project) => (
+                        <article key={project.id} className="project-showcase-card">
+                            <div className="project-showcase-tags" aria-label="Project technologies">
+                                {project.tags.map((tag) => (
+                                    <span key={tag}>{tag}</span>
                                 ))}
-                            </motion.div>
+                            </div>
 
-                            <motion.h3 
-                                className="text-xl font-semibold mb-2 text-gray-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors duration-300"
-                                initial={{ opacity: 0, x: -20 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                transition={{ duration: 0.5, delay: 0.5 }}
-                                viewport={{ once: true }}
-                            > 
-                                {project.title}
-                            </motion.h3>
-                            <motion.p 
-                                className="text-gray-600 dark:text-zinc-400 text-sm mb-6 leading-relaxed"
-                                initial={{ opacity: 0, y: 10 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.5, delay: 0.6 }}
-                                viewport={{ once: true }}
-                            >
-                                {project.description}
-                            </motion.p>
-                            <motion.div 
-                                className="flex justify-between items-center"
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.5, delay: 0.7 }}
-                                viewport={{ once: true }}
-                            >
-                                <div className="flex space-x-4">
-                                    <motion.a 
+                            <div className="project-showcase-media">
+                                <img
+                                    src={project.image}
+                                    alt={`Placeholder preview for ${project.title}`}
+                                    width="960"
+                                    height="540"
+                                    loading="lazy"
+                                    decoding="async"
+                                />
+                            </div>
+
+                            <div className="project-showcase-body">
+                                <h3>{project.title}</h3>
+                                <p>{project.description}</p>
+
+                                <div className="project-showcase-actions">
+                                    <a
                                         href={project.demoUrl}
                                         target="_blank"
-                                        className="text-gray-600 dark:text-zinc-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors duration-300 p-2 rounded-full hover:bg-purple-50 dark:hover:bg-purple-900/30"
-                                        whileHover={{ scale: 1.2, rotate: 5 }}
-                                        whileTap={{ scale: 0.9 }}
-                                        title="View Demo"
+                                        rel="noreferrer"
+                                        className="project-showcase-primary-link"
                                     >
-                                        <ExternalLink size={20}/>
-                                    </motion.a>
-                                    <motion.a 
+                                        View project
+                                        <ExternalLink size={17} aria-hidden="true" />
+                                    </a>
+                                    <a
                                         href={project.githubUrl}
                                         target="_blank"
-                                        className="text-gray-600 dark:text-zinc-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors duration-300 p-2 rounded-full hover:bg-purple-50 dark:hover:bg-purple-900/30"
-                                        whileHover={{ scale: 1.2, rotate: -5 }}
-                                        whileTap={{ scale: 0.9 }}
-                                        title="View Code"
+                                        rel="noreferrer"
+                                        className="project-showcase-source-link"
+                                        aria-label={`View ${project.title} source code on GitHub`}
                                     >
-                                        <Github size={20}/>
-                                    </motion.a>
+                                        <Github size={16} aria-hidden="true" />
+                                        Source
+                                    </a>
                                 </div>
-                            </motion.div>
-                        </motion.div>
-                    </motion.div>
-                ))}
-            </div>
+                            </div>
+                        </article>
+                    ))}
+                </div>
 
-            <motion.div 
-                className="mt-16 flex justify-center"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.8 }}
-                viewport={{ once: true }}
-            >
-                <motion.a 
-                    className="cosmic-button rounded-lg px-8 py-3 font-medium flex items-center gap-2 group"
-                    href="https://github.com/sirpratama" 
-                    target="_blank"
-                    whileHover={{ 
-                        scale: 1.05,
-                        boxShadow: "0 0 25px rgba(139, 92, 246, 0.7)"
-                    }}
-                    whileTap={{ scale: 0.95 }}
-                >
-                    Check My Github 
-                    <motion.div
-                        className="group-hover:translate-x-1 transition-transform duration-300"
-                        whileHover={{ x: 5 }}
+                <div className="mt-14 flex justify-center">
+                    <a
+                        className="cosmic-button rounded-lg px-8 py-3 font-medium flex items-center gap-2 group"
+                        href="https://github.com/sirpratama"
+                        target="_blank"
+                        rel="noreferrer"
                     >
-                        <ArrowRight size={16}/>
-                    </motion.div>
-                </motion.a>
-            </motion.div>
-        </div>
-    </section>
-}
+                        Check My Github
+                        <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
+                    </a>
+                </div>
+            </div>
+        </section>
+    );
+};

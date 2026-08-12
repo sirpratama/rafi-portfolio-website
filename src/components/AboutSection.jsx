@@ -1,6 +1,9 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion"; // eslint-disable-line
-import { Calendar, MapPin, ExternalLink } from "lucide-react";
+import { useLayoutEffect, useRef, useState } from "react";
+import { motion } from "framer-motion"; // eslint-disable-line
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const educationData = [
     {
@@ -12,7 +15,7 @@ const educationData = [
             "Currently pursuing a Bachelor's degree in Computer Science at Universitas Indonesia",
         ],
         projects: [],
-        logo: "/logos/UI logo 2.png" // Placeholder - replace with actual logo URL
+        logo: "/logos/UI logo 2.png"
     },
     {
         id: 2,
@@ -24,7 +27,7 @@ const educationData = [
             "Selected as **Indonesia representative** for World Scout Jamboree Korea 2023"
         ],
         projects: [],
-        logo: "/logos/Logo_Labschool.png" // Placeholder - replace with actual logo URL
+        logo: "/logos/Logo_Labschool.png"
     }
 ];
 
@@ -52,7 +55,7 @@ const experienceData = [
             "Successfully identified and liaised with merchandise vendors, ensuring cost-effectiveness"
         ],
         projects: [],
-        logo: "/logos/openhousefasilkom.png" // Placeholder - replace with actual company logo URL
+        logo: "/logos/openhousefasilkom.png"
     },
     {
         id: 3,
@@ -64,7 +67,7 @@ const experienceData = [
             "Actively participated in initiatives that enhanced the school scouts program visibility and engagement"
         ],
         projects: [],
-        logo: "/logos/worldscouting_logo.png" // Placeholder - replace with actual company logo URL
+        logo: "/logos/worldscouting_logo.png"
     },
     {
         id: 4,
@@ -75,135 +78,194 @@ const experienceData = [
             "Collaborated within a 30-member committee on daily sales of merchandise, food, and beverages, contributing to SkyAvenue achieving a net profit of **IDR 130 million** within six months"
         ],
         projects: [],
-        logo: "/logos/skyavenue_logo.png" // Placeholder - replace with actual company logo URL
+        logo: "/logos/skyavenue_logo.png"
     }
 ];
 
-const TimelineItem = ({ item, isLast }) => {
-    return (
-        <motion.div
-            className="relative flex gap-6 pb-8"
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-        >
-            {/* Timeline bullet and line */}
-            <div className="relative flex flex-col items-center">
-                <motion.div
-                    className="w-16 h-16 bg-white dark:bg-zinc-900 rounded-full border-4 border-purple-500 shadow-lg z-10 flex items-center justify-center text-2xl overflow-hidden"
-                    whileHover={{ scale: 1.1 }}
-                    transition={{ duration: 0.2 }}
-                >
-                    {item.logo.startsWith('/') ? (
-                        <img 
-                            src={item.logo} 
-                            alt={`${item.company || item.institution} logo`}
-                            className="w-full h-full object-cover rounded-full"
-                        />
-                    ) : (
-                        item.logo
-                    )}
-                </motion.div>
-                {!isLast && (
-                    <div className="w-0.5 h-full bg-gradient-to-b from-purple-300 to-blue-300 mt-2 absolute top-16" />
-                )}
-            </div>
+const renderFormattedText = (text) => {
+    const parts = text.split(/(\*\*.*?\*\*)/g);
 
-            {/* Content */}
-            <motion.div
-                className="flex-1 bg-white dark:bg-zinc-900/60 rounded-xl p-6 border border-gray-200 dark:border-zinc-800 hover:border-purple-300 dark:hover:border-purple-500 transition-colors duration-300 shadow-sm hover:shadow-lg"
-                whileHover={{ y: -2 }}
-                transition={{ duration: 0.2 }}
-            >
-                <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
-                    <div className="flex-1">
-                        <div className="flex items-start gap-2 mb-1">
-                            <span className="text-sm text-gray-500 dark:text-zinc-400 text-left">{item.period}</span>
-                        </div>
-                        <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-1 text-left">
-                            {item.company || item.institution}
-                        </h3>
-                        <p className="text-gray-600 dark:text-zinc-400 font-medium mb-4 text-left">
-                            {item.title}
-                        </p>
-                    </div>
+    return parts.map((part, index) => {
+        if (part.startsWith("**") && part.endsWith("**")) {
+            return (
+                <strong key={`${part}-${index}`} className="font-bold text-blue-600 dark:text-blue-400">
+                    {part.slice(2, -2)}
+                </strong>
+            );
+        }
+
+        return part;
+    });
+};
+
+const TimelineCard = ({ item }) => {
+    const organization = item.company || item.institution;
+
+    return (
+        <div className="about-timeline-card">
+            <div className="about-timeline-card__heading">
+                <div className="about-timeline-card__logo">
+                    <img
+                        src={item.logo}
+                        alt={`${organization} logo`}
+                        className="w-full h-full object-cover rounded-full"
+                    />
                 </div>
 
-                {/* Achievements */}
-                {item.achievements && item.achievements.length > 0 && (
-                    <ul className="space-y-2 mb-4">
-                        {item.achievements.map((achievement, index) => {
-                            // Function to render text with bold formatting
-                            const renderFormattedText = (text) => {
-                                const parts = text.split(/(\*\*.*?\*\*)/g);
-                                return parts.map((part, partIndex) => {
-                                    if (part.startsWith('**') && part.endsWith('**')) {
-                                        return (
-                                            <strong key={partIndex} className="font-bold text-purple-600 dark:text-purple-400">
-                                                {part.slice(2, -2)}
-                                            </strong>
-                                        );
-                                    }
-                                    return part;
-                                });
-                            };
+                <div className="min-w-0 flex-1">
+                    <span className="about-timeline-card__period">{item.period}</span>
+                    <h3>{organization}</h3>
+                    <p className="about-timeline-card__role">{item.title}</p>
+                </div>
+            </div>
 
-                            return (
-                                <motion.li
-                                    key={index}
-                                    className="flex items-start gap-2 text-gray-700 dark:text-zinc-300 text-sm leading-relaxed text-left"
-                                    initial={{ opacity: 0, x: -10 }}
-                                    whileInView={{ opacity: 1, x: 0 }}
-                                    transition={{ duration: 0.3, delay: index * 0.1 }}
-                                    viewport={{ once: true }}
-                                >
-                                    <span className="text-purple-500 text-xs leading-6 flex-shrink-0">●</span>
-                                    <span className="text-left">
-                                        {renderFormattedText(achievement)}
-                                    </span>
-                                </motion.li>
-                            );
-                        })}
-                    </ul>
-                )}
+            {item.achievements?.length > 0 && (
+                <ul className="about-timeline-card__achievements">
+                    {item.achievements.map((achievement, index) => (
+                        <li key={`${item.id}-achievement-${index}`}>
+                            <span>{renderFormattedText(achievement)}</span>
+                        </li>
+                    ))}
+                </ul>
+            )}
 
-                {/* Projects */}
-                {item.projects && item.projects.length > 0 && (
-                    <div className="flex flex-wrap gap-2 justify-start">
-                        {item.projects.map((project, index) => (
-                            <motion.span
-                                key={index}
-                                className="px-3 py-1 text-xs font-medium bg-gray-100 dark:bg-zinc-800 text-gray-700 dark:text-zinc-300 rounded-full border border-gray-200 dark:border-zinc-700 hover:bg-purple-50 dark:hover:bg-purple-900/30 hover:border-purple-200 dark:hover:border-purple-700 transition-colors duration-200 cursor-pointer text-left"
-                                initial={{ opacity: 0, scale: 0.8 }}
-                                whileInView={{ opacity: 1, scale: 1 }}
-                                transition={{ duration: 0.3, delay: index * 0.1 }}
-                                viewport={{ once: true }}
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                            >
-                                🌐 {project}
-                            </motion.span>
-                        ))}
-                    </div>
-                )}
-            </motion.div>
-        </motion.div>
+            {item.projects?.length > 0 && (
+                <div className="about-timeline-card__projects" aria-label="Related projects">
+                    {item.projects.map((project) => (
+                        <span key={project}>🌐 {project}</span>
+                    ))}
+                </div>
+            )}
+        </div>
     );
 };
 
 export const AboutSection = () => {
     const [activeTab, setActiveTab] = useState("experience");
+    const [activeIndex, setActiveIndex] = useState(0);
+    const sectionRef = useRef(null);
+    const layoutRef = useRef(null);
+    const railRef = useRef(null);
+    const navRef = useRef(null);
+    const progressRef = useRef(null);
+    const entriesRef = useRef([]);
 
     const currentData = activeTab === "experience" ? experienceData : educationData;
 
+    const setActiveJourneyItem = (index) => {
+        setActiveIndex(index);
+
+        const buttons = navRef.current?.querySelectorAll("button");
+        if (!buttons?.length) return;
+
+        gsap.to(buttons, {
+            opacity: 0.32,
+            x: 0,
+            duration: 0.28,
+            overwrite: "auto",
+        });
+
+        const activeButton = buttons[index];
+
+        gsap.to(activeButton, {
+            opacity: 1,
+            x: 8,
+            duration: 0.4,
+            ease: "power2.out",
+            overwrite: "auto",
+        });
+
+        if (window.innerWidth <= 900 && activeButton) {
+            const targetLeft =
+                activeButton.offsetLeft -
+                (navRef.current.clientWidth - activeButton.offsetWidth) / 2;
+
+            navRef.current.scrollTo({
+                left: Math.max(0, targetLeft),
+                behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+                    ? "auto"
+                    : "smooth",
+            });
+        }
+    };
+
+    useLayoutEffect(() => {
+        const entries = entriesRef.current.slice(0, currentData.length).filter(Boolean);
+        const media = gsap.matchMedia();
+
+        const context = gsap.context(() => {
+            gsap.set(entries, { clearProps: "opacity,visibility,transform" });
+            gsap.set(navRef.current?.querySelectorAll("button"), { opacity: 0.32, x: 0 });
+            gsap.set(navRef.current?.querySelector("button"), { opacity: 1, x: 8 });
+
+            entries.forEach((entry, index) => {
+                ScrollTrigger.create({
+                    trigger: entry,
+                    start: "top 56%",
+                    end: "bottom 44%",
+                    onEnter: () => setActiveJourneyItem(index),
+                    onEnterBack: () => setActiveJourneyItem(index),
+                });
+            });
+
+            gsap.fromTo(
+                progressRef.current,
+                { scaleY: 0, transformOrigin: "top center" },
+                {
+                    scaleY: 1,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: layoutRef.current,
+                        start: "top 45%",
+                        end: "bottom 55%",
+                        scrub: true,
+                    },
+                },
+            );
+
+            media.add("(min-width: 901px)", () => {
+                ScrollTrigger.create({
+                    trigger: layoutRef.current,
+                    start: "top 18%",
+                    end: "bottom 82%",
+                    pin: railRef.current,
+                    pinSpacing: false,
+                    anticipatePin: 1,
+                });
+            });
+        }, sectionRef);
+
+        ScrollTrigger.refresh();
+
+        return () => {
+            media.revert();
+            context.revert();
+        };
+    }, [activeTab, currentData.length]);
+
+    const changeTab = (tab) => {
+        if (tab === activeTab) return;
+        setActiveIndex(0);
+        entriesRef.current = [];
+        setActiveTab(tab);
+    };
+
+    const scrollToEntry = (index) => {
+        entriesRef.current[index]?.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+        });
+    };
+
     return (
-        <section id="about" className="py-24 px-8 bg-gray-50 dark:bg-zinc-950 relative overflow-hidden">
-            {/* Background decoration */}
-            <div className="absolute inset-0 bg-gradient-to-bl from-purple-500/5 to-blue-500/5 pointer-events-none" />
-            
-            <div className="mx-auto max-w-4xl relative z-10">
-                {/* Header */}
+        <section
+            id="about"
+            ref={sectionRef}
+            className="cerebrium-panel cerebrium-about-panel py-24 px-8 relative"
+        >
+            <div className="absolute inset-0 bg-gradient-to-bl from-blue-500/5 to-blue-500/5 pointer-events-none" />
+
+            <div className="mx-auto max-w-6xl relative z-10">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -211,22 +273,18 @@ export const AboutSection = () => {
                     viewport={{ once: true }}
                     className="text-center mb-12"
                 >
+                    <p className="cerebrium-kicker cerebrium-section-kicker">Journey &amp; background</p>
                     <motion.h2
-                        className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent leading-tight pb-2"
+                        className="cerebrium-section-title"
                         initial={{ opacity: 0, scale: 0.9 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.7, delay: 0.2 }}
                         viewport={{ once: true }}
-                        style={{
-                            WebkitBackgroundClip: 'text',
-                            WebkitTextFillColor: 'transparent',
-                            paddingBottom: '8px'
-                        }}
                     >
                         About Me
                     </motion.h2>
                     <motion.p
-                        className="text-gray-600 dark:text-zinc-400 text-lg max-w-3xl mx-auto leading-relaxed"
+                        className="cerebrium-section-copy"
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.4 }}
@@ -236,24 +294,25 @@ export const AboutSection = () => {
                     </motion.p>
                 </motion.div>
 
-                {/* Tab Navigation */}
                 <motion.div
-                    className="flex justify-center mb-12"
+                    className="flex justify-center mb-20"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.6 }}
                     viewport={{ once: true }}
                 >
-                    <div className="bg-white dark:bg-zinc-900/60 rounded-full p-2 border border-gray-200 dark:border-zinc-800 shadow-lg">
+                    <div className="cerebrium-segmented">
                         {["experience", "education"].map((tab) => (
                             <motion.button
                                 key={tab}
-                                onClick={() => setActiveTab(tab)}
-                                className={`px-8 py-3 rounded-full font-medium transition-all duration-300 capitalize ${
+                                type="button"
+                                onClick={() => changeTab(tab)}
+                                className={`cerebrium-segmented-button ${
                                     activeTab === tab
-                                        ? "bg-gradient-to-r from-purple-500 to-blue-500 text-white shadow-lg"
-                                        : "text-gray-600 dark:text-zinc-400 hover:text-purple-600 dark:hover:text-purple-400"
+                                        ? "bg-gradient-to-r from-blue-500 to-blue-500 text-white shadow-lg"
+                                        : "text-gray-600 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-400"
                                 }`}
+                                aria-pressed={activeTab === tab}
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
                             >
@@ -263,17 +322,55 @@ export const AboutSection = () => {
                     </div>
                 </motion.div>
 
-                {/* Timeline Content */}
-                <div className="relative">
-                    {currentData.map((item, index) => (
-                        <TimelineItem
-                            key={item.id}
-                            item={item}
-                            isLast={index === currentData.length - 1}
-                        />
-                    ))}
+                <div
+                    ref={layoutRef}
+                    className="about-scroll-layout"
+                    data-gsap-enhanced="true"
+                >
+                    <aside ref={railRef} className="about-timeline-rail" aria-label={`${activeTab} timeline navigation`}>
+                        <p className="about-timeline-rail__eyebrow"></p>
+                        <div className="about-timeline-rail__track" aria-hidden="true">
+                            <span ref={progressRef} />
+                        </div>
+
+                        <nav ref={navRef} className="about-timeline-nav">
+                            {currentData.map((item, index) => {
+                                const organization = item.company || item.institution;
+                                const isActive = activeIndex === index;
+
+                                return (
+                                    <button
+                                        key={`${activeTab}-nav-${item.id}`}
+                                        type="button"
+                                        data-active={isActive ? "true" : "false"}
+                                        aria-current={isActive ? "step" : undefined}
+                                        onClick={() => scrollToEntry(index)}
+                                    >
+                                        <span>
+                                            <strong>{organization}</strong>
+                                            <small>{item.period}</small>
+                                        </span>
+                                    </button>
+                                );
+                            })}
+                        </nav>
+                    </aside>
+
+                    <div className="about-timeline-content">
+                        {currentData.map((item, index) => (
+                            <article
+                                key={`${activeTab}-${item.id}`}
+                                ref={(node) => {
+                                    entriesRef.current[index] = node;
+                                }}
+                                className="about-timeline-entry"
+                            >
+                                <TimelineCard item={item} />
+                            </article>
+                        ))}
+                    </div>
                 </div>
             </div>
         </section>
     );
-}; 
+};

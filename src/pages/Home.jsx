@@ -7,7 +7,7 @@ import { ContactSection } from "@/components/ContactSection";
 import { Footer } from "@/components/Footer";
 
 export const Home = () => {
-    return <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+    return <div className="cerebrium-page-shell min-h-screen text-foreground overflow-x-clip">
         {/* Navbar */}
         <Navbar />
 

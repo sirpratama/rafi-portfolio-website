@@ -1790,6 +1790,7 @@ textarea {
   --cerebrium-blue: #2f6bff;
   --cerebrium-blue-dark: #174fd3;
   --portfolio-background: url("/jakarta-sky-background.webp");
+  --portfolio-surface-overlay: rgba(3, 17, 48, 0.28);
   --primary: 221 100% 59%;
 }
 
@@ -1804,7 +1805,11 @@ body {
   background-attachment: fixed;
 }
 
-#root,
+#root {
+  min-height: 100svh;
+  background: var(--portfolio-surface-overlay);
+}
+
 .cerebrium-page-shell {
   background: transparent;
 }
@@ -1819,8 +1824,13 @@ body {
   box-shadow: 0 8px 24px rgba(1, 12, 39, 0.2);
 }
 
-.cerebrium-hero {
+.cerebrium-hero,
+.cerebrium-dark-section,
+.cerebrium-footer {
   background-color: transparent;
+}
+
+.cerebrium-hero {
   background-image: none;
 }
 
@@ -1841,27 +1851,16 @@ body {
   text-shadow: 0 2px 18px rgba(0, 7, 28, 0.75);
 }
 
-.cerebrium-dark-section {
-  background-color: rgba(3, 17, 48, 0.22);
-}
-
 .cerebrium-skills {
-  background-image:
-    radial-gradient(circle, rgba(255, 255, 255, 0.42) 0.7px, transparent 0.8px),
-    linear-gradient(rgba(3, 17, 48, 0.26), rgba(3, 17, 48, 0.26));
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.42) 0.7px, transparent 0.8px);
 }
 
 .cerebrium-contact {
   background-image:
     radial-gradient(circle at 75% 10%, rgba(47, 107, 255, 0.17), transparent 28%),
-    radial-gradient(circle, rgba(255, 255, 255, 0.24) 0.6px, transparent 0.7px),
-    linear-gradient(rgba(3, 17, 48, 0.28), rgba(3, 17, 48, 0.28));
-  background-position: center, 1rem 1rem, center;
-  background-size: auto, 4.5rem 4.5rem, auto;
-}
-
-.cerebrium-footer {
-  background: rgba(3, 17, 48, 0.28);
+    radial-gradient(circle, rgba(255, 255, 255, 0.24) 0.6px, transparent 0.7px);
+  background-position: center, 1rem 1rem;
+  background-size: auto, 4.5rem 4.5rem;
 }
 
 .cerebrium-contact-info svg {

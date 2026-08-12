@@ -2,85 +2,14 @@ import { useLayoutEffect, useRef, useState } from "react";
 import { motion } from "framer-motion"; // eslint-disable-line
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import {
+    coursework,
+    earlierLeadership,
+    educationData,
+    experienceData,
+} from "@/data/portfolioData";
 
 gsap.registerPlugin(ScrollTrigger);
-
-const educationData = [
-    {
-        id: 1,
-        institution: "Universtas Indonesia",
-        title: "S.Kom. Computer Science",
-        period: "Expected Graduation: 2028",
-        achievements: [
-            "Currently pursuing a Bachelor's degree in Computer Science at Universitas Indonesia",
-        ],
-        projects: [],
-        logo: "/logos/UI logo 2.png"
-    },
-    {
-        id: 2,
-        institution: "SMA Labschool Kebayoran",
-        title: "High School",
-        period: "2021 - 2024",
-        achievements: [
-            "Graduated from SMA Labschool Kebayoran with a focus on Mathematics and Computer Science",
-            "Selected as **Indonesia representative** for World Scout Jamboree Korea 2023"
-        ],
-        projects: [],
-        logo: "/logos/Logo_Labschool.png"
-    }
-];
-
-const experienceData = [
-    {
-        id: 1,
-        company: "Google Developer Groups on Campus",
-        title: "Member",
-        period: "Dec 2024 - Present",
-        achievements: [
-            "Led a team of 3 to victory in the GDG On Campus UI Hackathon 2025, securing **Best Tech Implementation** and **Best UI/UX Design** awards",
-            "Architected and developed **REST APIs** for the Career Path Compass Hub project using React, Node.js, Express, and PostgreSQL",
-            "Leverage **AI** to personalize career paths for students by using **Google Gemini API**"
-        ],
-        projects: ["Career Path Compass Hub"],
-        logo: "/logos/gdgc_ui_logo.png"
-    },
-    {
-        id: 2,
-        company: "OpenHouse Fasilkom",
-        title: "Business Development Team",
-        period: "Aug 2024 - Sept 2024",
-        achievements: [
-            "Contributed to fundraising initiatives for OpenHouse Fasilkom through strategic merchandise sales and vendor relations",
-            "Successfully identified and liaised with merchandise vendors, ensuring cost-effectiveness"
-        ],
-        projects: [],
-        logo: "/logos/openhousefasilkom.png"
-    },
-    {
-        id: 3,
-        company: "Scouts",
-        title: "Core Team",
-        period: "Aug 2021 - Sept 2023",
-        achievements: [
-            "Selected as a **representative** for the Indonesia Contingent at the **World Scout Jamboree Korea 2023**, demonstrating leadership and adaptability",
-            "Actively participated in initiatives that enhanced the school scouts program visibility and engagement"
-        ],
-        projects: [],
-        logo: "/logos/worldscouting_logo.png"
-    },
-    {
-        id: 4,
-        company: "SkyeAvenue",
-        title: "Funding Committee",
-        period: "Jan 2023 - Aug 2023",
-        achievements: [
-            "Collaborated within a 30-member committee on daily sales of merchandise, food, and beverages, contributing to SkyAvenue achieving a net profit of **IDR 130 million** within six months"
-        ],
-        projects: [],
-        logo: "/logos/skyavenue_logo.png"
-    }
-];
 
 const renderFormattedText = (text) => {
     const parts = text.split(/(\*\*.*?\*\*)/g);
@@ -99,23 +28,28 @@ const renderFormattedText = (text) => {
 };
 
 const TimelineCard = ({ item }) => {
-    const organization = item.company || item.institution;
-
     return (
         <div className="about-timeline-card">
             <div className="about-timeline-card__heading">
                 <div className="about-timeline-card__logo">
-                    <img
-                        src={item.logo}
-                        alt={`${organization} logo`}
-                        className="w-full h-full object-cover rounded-full"
-                    />
+                    {item.logo ? (
+                        <img
+                            src={item.logo}
+                            alt={`${item.organization} logo`}
+                            className="w-full h-full object-cover rounded-full"
+                        />
+                    ) : (
+                        <span className="about-timeline-card__monogram" aria-hidden="true">
+                            {item.monogram}
+                        </span>
+                    )}
                 </div>
 
                 <div className="min-w-0 flex-1">
                     <span className="about-timeline-card__period">{item.period}</span>
-                    <h3>{organization}</h3>
-                    <p className="about-timeline-card__role">{item.title}</p>
+                    <h3>{item.organization}</h3>
+                    <p className="about-timeline-card__role">{item.role}</p>
+                    <p className="about-timeline-card__location">{item.location}</p>
                 </div>
             </div>
 
@@ -132,7 +66,7 @@ const TimelineCard = ({ item }) => {
             {item.projects?.length > 0 && (
                 <div className="about-timeline-card__projects" aria-label="Related projects">
                     {item.projects.map((project) => (
-                        <span key={project}>🌐 {project}</span>
+                        <span key={project}>{project}</span>
                     ))}
                 </div>
             )}
@@ -335,7 +269,6 @@ export const AboutSection = () => {
 
                         <nav ref={navRef} className="about-timeline-nav">
                             {currentData.map((item, index) => {
-                                const organization = item.company || item.institution;
                                 const isActive = activeIndex === index;
 
                                 return (
@@ -347,7 +280,7 @@ export const AboutSection = () => {
                                         onClick={() => scrollToEntry(index)}
                                     >
                                         <span>
-                                            <strong>{organization}</strong>
+                                            <strong>{item.organization}</strong>
                                             <small>{item.period}</small>
                                         </span>
                                     </button>
@@ -370,6 +303,29 @@ export const AboutSection = () => {
                         ))}
                     </div>
                 </div>
+
+                {activeTab === "experience" ? (
+                    <section className="about-supporting-block" aria-labelledby="earlier-leadership-title">
+                        <p className="cerebrium-kicker">Supporting experience</p>
+                        <h3 id="earlier-leadership-title">Earlier leadership</h3>
+                        <div className="about-supporting-grid">
+                            {earlierLeadership.map((item) => (
+                                <article key={item.id}>
+                                    <h4>{item.title}</h4>
+                                    <p>{item.summary}</p>
+                                </article>
+                            ))}
+                        </div>
+                    </section>
+                ) : (
+                    <section className="about-coursework" aria-labelledby="coursework-title">
+                        <p className="cerebrium-kicker">Academic foundation</p>
+                        <h3 id="coursework-title">Relevant coursework</h3>
+                        <ul>
+                            {coursework.map((course) => <li key={course}>{course}</li>)}
+                        </ul>
+                    </section>
+                )}
             </div>
         </section>
     );

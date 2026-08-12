@@ -32,7 +32,7 @@ test("scrolling experience entries updates the pinned journey index", async () =
     );
 
     const entries = page.locator(".about-timeline-entry");
-    assert.equal(await entries.count(), 4);
+    assert.equal(await entries.count(), 3);
 
     await entries.nth(1).scrollIntoViewIfNeeded();
     await entries.nth(1).evaluate((element) =>
@@ -41,7 +41,7 @@ test("scrolling experience entries updates the pinned journey index", async () =
     await page.waitForTimeout(500);
 
     const activeLabel = page.locator('.about-timeline-nav button[data-active="true"] strong');
-    assert.equal((await activeLabel.textContent()).trim(), "OpenHouse Fasilkom");
+    assert.equal((await activeLabel.textContent()).trim(), "Infovesta Utama");
 
     const railTop = await page.locator(".about-timeline-rail").evaluate(
         (element) => element.getBoundingClientRect().top,

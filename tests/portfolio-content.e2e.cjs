@@ -41,3 +41,22 @@ test("the proof strip exposes four quantified outcomes with context", async () =
     await assert.doesNotReject(() => proof.getByText(/Bank Indonesia/i).waitFor());
     await assert.doesNotReject(() => proof.getByText(/Infovesta/i).waitFor());
 });
+
+test("professional experience prioritizes AI and data work", async () => {
+    const about = page.locator("#about");
+    for (const organization of ["Bank Indonesia", "Infovesta Utama", "Google Developer Groups on Campus UI"]) {
+        await assert.doesNotReject(() => about.getByText(organization, { exact: true }).first().waitFor());
+    }
+    await assert.doesNotReject(() => about.getByText(/75%/).first().waitFor());
+    await assert.doesNotReject(() => about.getByText(/900 IDX-listed companies/).waitFor());
+    await assert.doesNotReject(() => about.getByRole("heading", { name: "Earlier leadership" }).waitFor());
+});
+
+test("education presents the UQ and UI double-degree path with relevant coursework", async () => {
+    await page.getByRole("button", { name: "education" }).click();
+    const about = page.locator("#about");
+    await assert.doesNotReject(() => about.getByText("The University of Queensland", { exact: true }).first().waitFor());
+    await assert.doesNotReject(() => about.getByText("Universitas Indonesia", { exact: true }).first().waitFor());
+    await assert.doesNotReject(() => about.getByText("Intro to AI and Data Science", { exact: true }).waitFor());
+    await assert.doesNotReject(() => about.getByText(/Double Degree Program/).first().waitFor());
+});

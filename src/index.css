@@ -1329,6 +1329,25 @@ textarea {
   box-shadow: none;
 }
 
+#about .about-timeline-card__location {
+  margin-top: 0.25rem;
+  color: var(--cerebrium-navy-soft);
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.67rem;
+  text-transform: uppercase;
+}
+
+#about .about-timeline-card__monogram {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  place-items: center;
+  color: var(--cerebrium-blue-dark);
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
 #about .about-timeline-card__projects span {
   color: var(--cerebrium-navy);
   border-color: var(--cerebrium-slate-deep);
@@ -1362,6 +1381,69 @@ textarea {
 
 #about .about-timeline-nav button[data-active="true"] small {
   color: var(--cerebrium-blue-dark);
+}
+
+.about-supporting-block,
+.about-coursework {
+  max-width: 68rem;
+  margin: 5rem auto 0;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  border-radius: 15px;
+  background: var(--cerebrium-ice);
+}
+
+.about-supporting-block > h3,
+.about-coursework > h3 {
+  margin: 0.75rem 0 1.5rem;
+  color: var(--cerebrium-navy);
+  font-size: clamp(1.8rem, 4vw, 2.7rem);
+  font-weight: 400;
+}
+
+.about-supporting-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.about-supporting-grid article {
+  padding-top: 1rem;
+  border-top: 2px solid var(--cerebrium-blue);
+}
+
+.about-supporting-grid h4 {
+  margin: 0;
+  color: var(--cerebrium-navy);
+  font-weight: 500;
+}
+
+.about-supporting-grid p {
+  margin: 0.75rem 0 0;
+  color: var(--cerebrium-navy-soft);
+  line-height: 1.55;
+}
+
+.about-coursework ul {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about-coursework li {
+  padding: 0.85rem 1rem;
+  border-radius: 7px;
+  color: var(--cerebrium-navy);
+  background: white;
+}
+
+@media (max-width: 760px) {
+  .about-supporting-grid,
+  .about-coursework ul {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Skills */

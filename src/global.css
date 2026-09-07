@@ -1,0 +1,27 @@
+#root {
+  --background: var(--color-background);
+  --foreground: var(--color-foreground);
+  background-color: hsl(var(--chroma-panel) / var(--chroma-bg));
+  color: hsl(var(--chroma-text) / var(--chroma-fg));
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Fix logo images to fit circular frames properly */
+img[aria-label$="monogram"],
+img[alt$="-logo"],
+.monogram,
+.logo-icon {
+  object-fit: contain !important;
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Specifically target Infovesta if it's oversized */
+[class*="infovesta"] img,
+img[src*="infovesta"] {
+  max-height: 80px;
+  object-fit: contain;
+}

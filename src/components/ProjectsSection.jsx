@@ -81,20 +81,7 @@ export const ProjectsSection = () => {
                             <div className="project-showcase-body">
                                 <p className="project-showcase-recognition">{project.recognition}</p>
                                 <h3>{project.title}</h3>
-                                <dl className="project-showcase-details">
-                                    <div className="project-showcase-detail">
-                                        <dt>Problem</dt>
-                                        <dd>{project.problem}</dd>
-                                    </div>
-                                    <div className="project-showcase-detail">
-                                        <dt>Approach</dt>
-                                        <dd>{project.approach}</dd>
-                                    </div>
-                                    <div className="project-showcase-detail">
-                                        <dt>Result</dt>
-                                        <dd>{project.result}</dd>
-                                    </div>
-                                </dl>
+                                <p className="project-showcase-description">{project.description || ""}</p>
 
                                 <div className="project-showcase-actions">
                                     <a

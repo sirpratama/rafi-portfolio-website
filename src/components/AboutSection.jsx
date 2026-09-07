@@ -36,7 +36,7 @@ const TimelineCard = ({ item }) => {
                         <img
                             src={item.logo}
                             alt={`${item.organization} logo`}
-                            className="w-full h-full object-cover rounded-full"
+                            className="w-full h-full object-cover rounded-full max-w-none object-cover"
                         />
                     ) : (
                         <span className="about-timeline-card__monogram" aria-hidden="true">

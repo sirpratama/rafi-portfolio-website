@@ -80,7 +80,7 @@ export const educationData = [
         role: "Bachelor of Computer Science, Major in Artificial Intelligence",
         period: "Expected May 2028",
         location: "Brisbane, Australia",
-        monogram: "UQ",
+        logo: "/logos/uq-logo.png",
         achievements: ["Computer Science **Double Degree Program** with Universitas Indonesia."],
         projects: [],
     },

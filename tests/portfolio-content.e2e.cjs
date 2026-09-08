@@ -19,6 +19,8 @@ after(async () => {
 afterEach(async () => {
     await page.setViewportSize({ width: 1440, height: 1000 });
     await page.emulateMedia({ reducedMotion: "no-preference" });
+    await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
+    await page.waitForTimeout(100);
 
     const experienceTab = page.getByRole("button", { name: "experience", exact: true });
     if (await experienceTab.count() && await experienceTab.getAttribute("aria-pressed") !== "true") {
@@ -159,7 +161,52 @@ test("skills are organized by recruiter-relevant capabilities", async () => {
     for (const tool of ["LangChain", "Power BI", "Docker Compose"]) {
         await assert.doesNotReject(() => skills.getByText(tool, { exact: true }).waitFor());
     }
-    assert.equal(await skills.locator(".skill-group-card").count(), 3);
+    assert.equal(await skills.locator(".capability-cluster").count(), 3);
+    await assert.doesNotReject(() => skills.getByRole("heading", { name: "Useful decision systems" }).waitFor());
+});
+
+test("the capability system fits the viewport and reveals each branch while scrolling", async () => {
+    const skills = page.locator("#skills");
+    const map = skills.locator(".capabilities-map");
+    const hub = skills.locator(".capability-hub");
+    const ai = skills.locator('[data-capability="ai-ml"]');
+    const data = skills.locator('[data-capability="data-bi"]');
+    const engineering = skills.locator('[data-capability="product-engineering"]');
+
+    await skills.scrollIntoViewIfNeeded();
+    await assert.doesNotReject(() => map.waitFor({ state: "visible" }));
+
+    const geometry = await Promise.all([map, hub, ai, data, engineering].map((locator) => locator.boundingBox()));
+    for (const [index, box] of geometry.entries()) {
+        assert.ok(box, `expected capability element ${index} to be measurable`);
+        assert.ok(box.x >= -0.5, `capability element ${index} escapes the left edge: ${JSON.stringify(box)}`);
+        assert.ok(box.x + box.width <= 1440.5, `capability element ${index} escapes the right edge: ${JSON.stringify(box)}`);
+    }
+
+    const [, hubBox, aiBox, dataBox, engineeringBox] = geometry;
+    assert.ok(aiBox.x < hubBox.x, "AI branch should sit to the left of the decision-system hub");
+    assert.ok(dataBox.x > hubBox.x, "data branch should sit to the right of the decision-system hub");
+    assert.ok(engineeringBox.y > hubBox.y, "engineering branch should sit below the decision-system hub");
+
+    const sectionTop = await skills.evaluate((section) => section.getBoundingClientRect().top + window.scrollY);
+    const branchOpacity = async () => Promise.all(
+        [ai, data, engineering].map((locator) => locator.evaluate((element) => Number.parseFloat(getComputedStyle(element).opacity))),
+    );
+
+    await page.evaluate((top) => window.scrollTo({ top: top + 20, behavior: "instant" }), sectionTop);
+    await page.waitForTimeout(900);
+    let opacity = await branchOpacity();
+    assert.ok(opacity[0] > opacity[1] && opacity[0] > opacity[2], `AI branch should lead first: ${opacity}`);
+
+    await page.evaluate((top) => window.scrollTo({ top: top + 950, behavior: "instant" }), sectionTop);
+    await page.waitForTimeout(900);
+    opacity = await branchOpacity();
+    assert.ok(opacity[1] > opacity[0] && opacity[1] > opacity[2], `data branch should lead second: ${opacity}`);
+
+    await page.evaluate((top) => window.scrollTo({ top: top + 1900, behavior: "instant" }), sectionTop);
+    await page.waitForTimeout(900);
+    opacity = await branchOpacity();
+    assert.ok(opacity[2] > opacity[0] && opacity[2] > opacity[1], `engineering branch should lead last: ${opacity}`);
 });
 
 test("skills bound decorative layers to the section", async () => {
@@ -226,6 +273,108 @@ test("four flagship case studies explain problem, approach, result, and source",
     assert.equal(await cards.getByRole("heading", { name: "Career Path Compass Hub" }).count(), 0);
 });
 
+test("project cards form one horizontal row and advance with vertical scroll", async () => {
+    try {
+        await page.setViewportSize({ width: 1440, height: 900 });
+        await page.goto(baseUrl, { waitUntil: "networkidle" });
+
+        const section = page.locator("#projects");
+        const track = section.locator(".projects-showcase-grid");
+        assert.equal(await section.getAttribute("data-horizontal-projects"), "true");
+        assert.equal(await track.getAttribute("data-horizontal-track"), "true");
+
+        const layout = await track.evaluate((element) => {
+            const styles = getComputedStyle(element);
+            const cards = [...element.querySelectorAll(".project-showcase-card")]
+                .map((card) => card.getBoundingClientRect());
+
+            return {
+                display: styles.display,
+                flexWrap: styles.flexWrap,
+                trackWidth: element.scrollWidth,
+                viewportWidth: element.clientWidth,
+                cardTops: cards.map(({ top }) => top),
+            };
+        });
+
+        assert.equal(layout.display, "flex");
+        assert.equal(layout.flexWrap, "nowrap");
+        assert.ok(layout.trackWidth > layout.viewportWidth, "the track should extend past its viewport");
+        assert.ok(
+            layout.cardTops.every((top) => Math.abs(top - layout.cardTops[0]) < 2),
+            `expected all project cards to share one row, received ${layout.cardTops}`,
+        );
+
+        const sectionStart = await section.evaluate((element) => window.scrollY + element.getBoundingClientRect().top);
+        await page.evaluate((y) => window.scrollTo(0, y), sectionStart);
+        await page.waitForTimeout(100);
+        const startX = await track.evaluate((element) => {
+            const transform = getComputedStyle(element).transform;
+            return transform === "none" ? 0 : Number.parseFloat(transform.split(",")[4]);
+        });
+
+        await page.evaluate((y) => window.scrollTo(0, y + 600), sectionStart);
+        await page.waitForTimeout(100);
+        const scrolledX = await track.evaluate((element) => {
+            const transform = getComputedStyle(element).transform;
+            return transform === "none" ? 0 : Number.parseFloat(transform.split(",")[4]);
+        });
+
+        assert.ok(scrolledX < startX - 20, `expected the track to move left while scrolling, received ${startX} to ${scrolledX}`);
+    } finally {
+        await page.setViewportSize({ width: 1440, height: 1000 });
+    }
+});
+
+test("the project track keeps every card reachable without a visible document scrollbar", async () => {
+    try {
+        await page.setViewportSize({ width: 1440, height: 900 });
+        await page.goto(baseUrl, { waitUntil: "networkidle" });
+
+        const section = page.locator("#projects");
+        const track = section.locator(".projects-showcase-grid");
+        const initial = await section.evaluate((element) => {
+            const projectTrack = element.querySelector(".projects-showcase-grid");
+            return {
+                cardCount: projectTrack.querySelectorAll(".project-showcase-card").length,
+                trackWidth: projectTrack.scrollWidth,
+                viewportWidth: projectTrack.clientWidth,
+                scrollbarWidth: getComputedStyle(document.documentElement).scrollbarWidth,
+            };
+        });
+
+        assert.equal(initial.cardCount, 4);
+        assert.ok(initial.trackWidth > initial.viewportWidth, "the project track should contain all cards beyond the viewport");
+        assert.equal(initial.scrollbarWidth, "none");
+
+        const sectionStart = await section.evaluate((element) => window.scrollY + element.getBoundingClientRect().top);
+        const horizontalScrollPosition = Math.max(100, initial.trackWidth - initial.viewportWidth - 100);
+        await page.evaluate(
+            ([y, offset]) => window.scrollTo(0, y + offset),
+            [sectionStart, horizontalScrollPosition],
+        );
+        await page.waitForTimeout(100);
+
+        const lastCardVisibility = await track.evaluate((element) => {
+            const lastCard = element.querySelector(".project-showcase-card:last-child");
+            const cardBounds = lastCard.getBoundingClientRect();
+            const sampleX = Math.min(window.innerWidth - 10, cardBounds.right - 10);
+            const sampleY = Math.max(10, Math.min(window.innerHeight - 10, cardBounds.top + 50));
+            const hitTarget = document.elementFromPoint(sampleX, sampleY);
+
+            return {
+                inViewport: cardBounds.left < window.innerWidth && cardBounds.right > 0,
+                receivesPointerHit: hitTarget?.closest(".project-showcase-card") === lastCard,
+            };
+        });
+
+        assert.equal(lastCardVisibility.inViewport, true);
+        assert.equal(lastCardVisibility.receivesPointerHit, true, "the last project card should be visibly reachable during vertical scroll");
+    } finally {
+        await page.setViewportSize({ width: 1440, height: 1000 });
+    }
+});
+
 test("a failed placeholder cannot re-enter the project image fallback", async () => {
     const fallbackContext = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
     const fallbackPage = await fallbackContext.newPage();
@@ -268,7 +417,7 @@ test("the enriched portfolio remains semantic and horizontally contained", async
                     ".cerebrium-proof-grid",
                     "#about .about-scroll-layout",
                     "#about .about-timeline-entry",
-                    "#skills .skill-group-card",
+                    "#skills .capability-cluster",
                     "#projects .project-showcase-card",
                     "#contact .cerebrium-contact-info",
                     "#contact .cerebrium-contact-form",

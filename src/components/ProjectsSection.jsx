@@ -1,6 +1,11 @@
+import { useLayoutEffect, useRef } from "react";
 import { projects } from "@/data/portfolioData";
 import { ArrowRight, ExternalLink } from "lucide-react";
-import { motion } from "framer-motion"; // eslint-disable-line
+import { motion, useReducedMotion } from "framer-motion"; // eslint-disable-line
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const PROJECT_FALLBACK = "/projects/project-placeholder.svg";
 
@@ -33,8 +38,58 @@ const ProjectImage = ({ project }) => (
 );
 
 export const ProjectsSection = () => {
+    const shouldReduceMotion = useReducedMotion();
+    const sectionRef = useRef(null);
+    const trackRef = useRef(null);
+
+    useLayoutEffect(() => {
+        const section = sectionRef.current;
+        const track = trackRef.current;
+
+        if (!section || !track) return undefined;
+
+        const media = gsap.matchMedia();
+        const context = gsap.context(() => {
+            gsap.set(track, { x: 0 });
+
+            if (!shouldReduceMotion) {
+                media.add("(min-width: 821px)", () => {
+                    const getDistance = () => Math.max(0, track.scrollWidth - track.clientWidth);
+                    const horizontalTween = gsap.to(track, {
+                        x: () => -getDistance(),
+                        ease: "none",
+                        paused: true,
+                    });
+
+                    ScrollTrigger.create({
+                        trigger: section,
+                        start: "top top",
+                        end: () => `+=${getDistance()}`,
+                        animation: horizontalTween,
+                        pin: true,
+                        scrub: 1,
+                        anticipatePin: 1,
+                        invalidateOnRefresh: true,
+                    });
+                });
+            }
+        }, section);
+
+        ScrollTrigger.refresh();
+
+        return () => {
+            media.revert();
+            context.revert();
+        };
+    }, [shouldReduceMotion]);
+
     return (
-        <section id="projects" className="cerebrium-panel cerebrium-projects-panel py-24 px-8 relative overflow-hidden">
+        <section
+            id="projects"
+            ref={sectionRef}
+            data-horizontal-projects="true"
+            className="cerebrium-panel cerebrium-projects-panel py-24 px-8 relative overflow-hidden"
+        >
             <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/5 to-blue-500/5 pointer-events-none" />
 
             <div className="mx-auto max-w-6xl relative z-10">
@@ -65,7 +120,12 @@ export const ProjectsSection = () => {
                     </motion.p>
                 </motion.div>
 
-                <div className="projects-showcase-grid">
+                <div
+                    ref={trackRef}
+                    className="projects-showcase-grid"
+                    data-horizontal-track="true"
+                    aria-label="Featured projects"
+                >
                     {projects.map((project) => (
                         <article key={project.id} className="project-showcase-card">
                             <div className="project-showcase-tags" aria-label={`${project.title} technologies`}>
@@ -98,18 +158,6 @@ export const ProjectsSection = () => {
                             </div>
                         </article>
                     ))}
-                </div>
-
-                <div className="mt-14 flex justify-center">
-                    <a
-                        className="cosmic-button rounded-lg px-8 py-3 font-medium flex items-center gap-2 group"
-                        href="https://github.com/sirpratama"
-                        target="_blank"
-                        rel="noreferrer"
-                    >
-                        Check My Github
-                        <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
-                    </a>
                 </div>
             </div>
         </section>
